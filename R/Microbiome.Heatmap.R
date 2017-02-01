@@ -1,6 +1,6 @@
 #' \code{Microbiome.Heatmap.R} Plot Heat map of microbiome data
 #'
-#' @description Creates a heat map based on a user provided metadata category. Transforms to log2(percent), log10(percent), or CLR as requested. For plotting purposes, a prior of 0.01% is added to the log percent abundances. Row clustering of ggplot2 output is by upgma of euclidean dist. If no metadata passed, column clustering will be applied in the heatmap.2 output.
+#' @description Creates a heat map based based on user provided table. Transforms to log2(percent), log10(percent), or CLR as requested. For plotting purposes, a prior of 0.01% is added to the log percent abundances. Row clustering of ggplot2 output is by upgma of euclidean dist. If no metadata passed, column clustering will be applied in the heatmap.2 output.
 #'
 #' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
 #' @param METADATA Metadata file to be used for blocking.
@@ -14,13 +14,6 @@
 #' @export
 
 Microbiome.Heatmap<-function(OTUTABLE,METADATA, NTOPFEATURES, TRANSFORM, CATEGORY,ORDER,USERORDER, PLOTMETHOD){
-
-#OTUTABLE<-Summarize.Taxa(ISU.table,taxonomy)[[6]]
-#METADATA<-metadata
-#TRANSFORM="log10"
-#CATEGORY="Group"
-#ORDER=c(0,2,3,4)
-#NTOPFEATURES=20
 
 if(missing(TRANSFORM)){TRANSFORM="log10"; print("No transform specified, using log10")}
 if(missing(PLOTMETHOD)){PLOTMETHOD="ggplot2"; print("No plotting method specified, using ggplot2")}
