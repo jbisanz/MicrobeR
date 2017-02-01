@@ -3,4 +3,6 @@
 .RData
 .Ruserdata
 MicrobeR.Rproj
-
+.gitignore
+.DS_Store
+R/.DS_Store
