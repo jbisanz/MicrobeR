@@ -4,7 +4,7 @@
 \alias{Make.Tree}
 \title{\code{Make.Tree.R} Generate a phylogenetic tree to and plot}
 \usage{
-Make.Tree(FEATURENAMES, FEATURESEQS, MUSCLE, MAKEPHY)
+Make.Tree(FEATURENAMES, FEATURESEQS, MUSCLE, MAKEPHY, PRINTTREE)
 }
 \arguments{
 \item{FEATURENAMES}{The names of your features/OTUs/SVs. Will be the row names of your input table in most cases.}

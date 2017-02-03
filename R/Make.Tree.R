@@ -10,7 +10,7 @@
 #' @return Returns tree object and prints a phylogenetic tree
 #' @export
 
-Make.Tree<-function(FEATURENAMES,FEATURESEQS, MUSCLE, MAKEPHY){
+Make.Tree<-function(FEATURENAMES,FEATURESEQS, MUSCLE, MAKEPHY, PRINTTREE){
 
   if(missing(MUSCLE)){MUSCLE="/macqiime/bin/muscle"}
   if(missing(MAKEPHY)){MAKEPHY="/macqiime/anaconda/bin/make_phylogeny.py"}
