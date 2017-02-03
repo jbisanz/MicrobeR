@@ -24,7 +24,7 @@ Make.Tree<-function(FEATURENAMES,FEATURESEQS, MUSCLE, MAKEPHY){
 
   TREE<-ape::read.tree("Feature_Seqs.tree")
 
-if (PRINTTREE=TRUE){
+if (PRINTTREE==TRUE){
   plot.phylo(TREE, cex=0.3, direction="downwards")
 }
 

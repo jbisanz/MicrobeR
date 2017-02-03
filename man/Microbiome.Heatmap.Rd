@@ -28,6 +28,6 @@ Microbiome.Heatmap(OTUTABLE, METADATA, NTOPFEATURES, TRANSFORM, CATEGORY, ORDER,
 Prints a heat map
 }
 \description{
-Creates a heat map based on a user provided metadata category. Transforms to log2(percent), log10(percent), or CLR as requested. For plotting purposes, a prior of 0.01% is added to the log percent abundances. Row clustering of ggplot2 output is by upgma of euclidean dist. If no metadata passed, column clustering will be applied in the heatmap.2 output.
+Creates a heat map based based on user provided table. Transforms to log2(percent), log10(percent), or CLR as requested. For plotting purposes, a prior of 0.01% is added to the log percent abundances. Row clustering of ggplot2 output is by upgma of euclidean dist. If no metadata passed, column clustering will be applied in the heatmap.2 output.
 }
 
