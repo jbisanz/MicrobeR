@@ -55,32 +55,21 @@ if(missing(AXIS)){AXIS=c(1,2)}
   PLOT<-merge(as.data.frame(PCO$vectors), METADATA[rownames(PCO$vectors),], by="row.names", all=T )
 
 
-  if(missing(COLOR)){COLOR=rownames(METADATA)} else{
+  if(missing(COLOR)){COLORS=rownames(METADATA)} else{
     ADONIS<-vegan::adonis(DISTMATRIX ~ METADATA[rownames(DISTMATRIX),COLOR], permutations=999)
     print(paste0(COLOR, "-> ADONIS P=", ADONIS$aov.tab$`Pr(>F)`[1], " R2=", signif(ADONIS$aov.tab$R2[1],3)))
-<<<<<<< HEAD
     COLORS<-METADATA[[COLOR]]
-=======
-    COLOR<-METADATA[[COLOR]]
->>>>>>> 7e9395c808658c2f28805ab84a052e5f7829785b
+
   }
-  if(missing(SHAPE)){SHAPE=rep("Sample", nrow(METADATA))} else{
+  if(missing(SHAPE)){SHAPES=rep("Sample", nrow(METADATA))} else{
     ADONIS<-vegan::adonis(DISTMATRIX ~ METADATA[rownames(DISTMATRIX),SHAPE], permutations=999)
     print(paste0(SHAPE, "-> ADONIS P=", ADONIS$aov.tab$`Pr(>F)`[1], " R2=", signif(ADONIS$aov.tab$R2[1],3)))
-<<<<<<< HEAD
     SHAPES<-METADATA[[SHAPE]]
   }
 
     FINALPLOT<-(ggplot(PLOT, aes(x=Axis.1, y=Axis.2, color=COLORS, shape=SHAPES))
           + geom_point(alpha=0.5) + theme_bw()
-=======
-    SHAPE<-METADATA[[SHAPE]]
-  }
-
-    FINALPLOT<-(ggplot(PLOT, aes(x=Axis.1, y=Axis.2, color=COLOR, shape=SHAPE))
-          + geom_point(alpha=0.5) + theme_bw()
-          + labs(color=curcond)
->>>>>>> 7e9395c808658c2f28805ab84a052e5f7829785b
+          + labs(color=COLOR, shape=SHAPE)
           + theme(plot.title=element_text(size=10), axis.text=element_text(size=8), aspect.ratio = 1, axis.title=element_text(size=8,face="bold"))
           + ggtitle(METRIC)
           + xlab(paste0("PCo", AXIS[1],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[1],1), "% Variation Explained"))
