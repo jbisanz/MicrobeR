@@ -2,24 +2,31 @@
 % Please edit documentation in R/PCoA.R
 \name{PCoA}
 \alias{PCoA}
-\title{\code{PCoA} Plot PCoAs of Bray-Curtis and (Un)Weighted UniFrac using first 3 axes.}
+\title{\code{PCoA} Generate Distance/Dissimilarities and plot PCoA}
 \usage{
-PCoA("Treatment_and_Time.pdf", experiment_metadata, otutable, ggtree, c("Treatment","Time","ExtractionPlate"), FALSE)
+PCoA(METRIC="braycurtis", METADATA=experiment_metadata, OTUTABLE=otutable, TREE=ggtree, COLOR="Time", SHAPE="Group", SUBSAMPLE=TRUE, AXIS=c(1,2))
 }
 \arguments{
-\item{PDFTITLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
+\item{METRIC}{Desired beta-diversity metric, options are Bray Curtis (braycurtis), Weighted UniFrac (weightedunifrac), UnWeighted UniFrac (unweightedunifrac), Jensen-Shannon diversgence (jsd).}
 
 \item{METADATA}{Metadata Table with variables to color PCoAs by}
 
 \item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
 
-\item{TREE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
+\item{TREE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names, only required for UniFrac Metrics}
 
-\item{CONDS}{A vector of column names from METADATA to use: ex c("Treatment","Time")}
+\item{COLOR}{Metadata column to color samples by. Defaults to sample names from metadata row names.}
+
+\item{SHAPE}{Metadata column to shape samples by. Defaults to none.}
 
 \item{SUBSAMPLE}{Should table be subsampled? TRUE/FALSE (default: TRUE)}
+
+\item{AXIS}{Which Axis should be plotted? Expects a numeric vector of length 2. defaults to Pco1 and Pco2 AXIS=c(1,2)}
+}
+\value{
+Returns a ggplot
 }
 \description{
-Will create a 2x6 PDF for each condition passed. UniFrac is implimented as per GUniFrac and PCoA from APE. Plotting via ggplot2.
+UniFrac is implimented as per GUniFrac, Bray Curtis from Vegan, Jensen-Shannon divergence from textmineR, and PCoA from APE. Plotting via ggplot2. Will also carry out ADONIS and return p and r2 in plot title.
 }
 

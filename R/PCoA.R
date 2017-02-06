@@ -1,18 +1,24 @@
-#' \code{PCoA} Plot PCoAs of Bray-Curtis and (Un)Weighted UniFrac using first 3 axes.
+#' \code{PCoA} Generate Distance/Dissimilarities and plot PCoA
 #'
-#' @description Will create a 2x6 PDF for each condition passed. UniFrac is implimented as per GUniFrac and PCoA from APE. Plotting via ggplot2.
+#' @description  UniFrac is implimented as per GUniFrac, Bray Curtis from Vegan, Jensen-Shannon divergence from textmineR, and PCoA from APE. Plotting via ggplot2. Will also carry out ADONIS and return p and r2 in plot title.
 #'
-#' @param PDFTITLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
+#' @param METRIC Desired beta-diversity metric, options are Bray Curtis (braycurtis), Weighted UniFrac (weightedunifrac), UnWeighted UniFrac (unweightedunifrac), Jensen-Shannon diversgence (jsd).
 #' @param METADATA Metadata Table with variables to color PCoAs by
 #' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
-#' @param TREE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
-#' @param CONDS A vector of column names from METADATA to use: ex c("Treatment","Time")
+#' @param TREE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names, only required for UniFrac Metrics
+#' @param COLOR Metadata column to color samples by. Defaults to sample names from metadata row names.
+#' @param SHAPE Metadata column to shape samples by. Defaults to none.
 #' @param SUBSAMPLE Should table be subsampled? TRUE/FALSE (default: TRUE)
+#' @param AXIS Which Axis should be plotted? Expects a numeric vector of length 2. defaults to Pco1 and Pco2 AXIS=c(1,2)
 #'
-#' @usage PCoA("Treatment_and_Time.pdf", experiment_metadata, otutable, ggtree, c("Treatment","Time","ExtractionPlate"), FALSE)
+#' @usage PCoA(METRIC="braycurtis", METADATA=experiment_metadata, OTUTABLE=otutable, TREE=ggtree, COLOR="Time", SHAPE="Group", SUBSAMPLE=TRUE, AXIS=c(1,2))
+#' @return Returns a ggplot
 #' @export
 
-PCoA<-function(PDFTITLE,METADATA,OTUTABLE, TREE, CONDS, SUBSAMPLE){
+PCoA<-function(METRIC,METADATA,OTUTABLE, TREE, COLOR, SHAPE, CONDS, SUBSAMPLE, AXIS){
+
+  if(missing(TREE) & (METRIC=="weightedunifrac" | METRIC=="unweightedunifrac")){stop("ERROR: UniFrac requested, but tree not supplied...")}
+
 
   if(missing(SUBSAMPLE) || SUBSAMPLE==TRUE){
       DEPTH<-min(colSums(OTUTABLE))
@@ -23,42 +29,51 @@ PCoA<-function(PDFTITLE,METADATA,OTUTABLE, TREE, CONDS, SUBSAMPLE){
      filtered.TREE<-TREE
   }
 
-  print("Doing UniFrac...")
-  unifracs <- GUniFrac::GUniFrac(t(sub.OTUlevel),filtered.TREE, alpha=c(0, 0.5, 1))$unifracs
-  weighted.UniFrac <- unifracs[, , "d_1"] # Weighted UniFrac as per ?GUniFrac
-  unweighted.UniFrac <- unifracs[, , "d_UW"] # Unweighted UniFrac
-  print("Doing Bray Curtis...")
-  braycurtis<-vegan::vegdist(t(sub.OTUlevel), method="bray", binary=FALSE, diag=FALSE, upper=FALSE)
-  braycurtis<-as.matrix(braycurtis)
+if(missing(AXIS)){AXIS=c(1,2)}
 
-  print("Doing PCoA analysis...")
-  pco.braycurtis<-ape::pcoa(braycurtis) #using the principal coordinants analysis of the ape package
-  pco.weighted.UniFrac<-ape::pcoa(weighted.UniFrac)
-  pco.unweighted.UniFrac<-ape::pcoa(unweighted.UniFrac)
-
-  print ("Plotting...")
-  plot.pco.braycurtis<-merge(as.data.frame(pco.braycurtis$vectors), METADATA[rownames(pco.braycurtis$vectors),], by="row.names", all.x=T)
-  plot.pco.weighted.UniFrac<-merge(as.data.frame(pco.weighted.UniFrac$vectors), METADATA[rownames(pco.weighted.UniFrac$vectors),], by="row.names", all.x=T)
-  plot.pco.unweighted.UniFrac<-merge(as.data.frame(pco.unweighted.UniFrac$vectors), METADATA[rownames(pco.unweighted.UniFrac$vectors),], by="row.names", all.x=T)
-
-  print(paste("Making PDF in current working directory called:", PDFTITLE))
-  pdf(PDFTITLE, height=10, width=8)
-  for (i in 1:length(CONDS)){
-    curcond<-CONDS[i]
-    print(paste("...Plotting: ", curcond))
-    grid.newpage()
-    pushViewport(viewport(layout = grid.layout(3, 2)))
-    print(ggplot(plot.pco.braycurtis, aes(x=Axis.1, y=Axis.2, color=plot.pco.braycurtis[,curcond])) + geom_point(alpha=0.5) + theme_bw() + theme(plot.title=element_text(size=10), axis.text=element_text(size=8), aspect.ratio = 1, axis.title=element_text(size=8,face="bold")) + ggtitle("Bray Curtis, PCo1 vs PCo2") + xlab(paste("PCo1:", round((100*pco.braycurtis$values$Eigenvalues/sum(pco.braycurtis$values$Eigenvalues))[1],1), "% Variation Explained")) + ylab(paste("PCo2:", round((100*pco.braycurtis$values$Eigenvalues/sum(pco.braycurtis$values$Eigenvalues))[2],1), "% Variation Explained")) + scale_color_discrete(name=curcond), vp = viewport(layout.pos.row = 1, layout.pos.col = 1))
-    print(ggplot(plot.pco.braycurtis, aes(x=Axis.2, y=Axis.3, color=plot.pco.braycurtis[,curcond])) + geom_point(alpha=0.5) + theme_bw() + theme(plot.title=element_text(size=10), axis.text=element_text(size=8), aspect.ratio = 1, axis.title=element_text(size=8,face="bold")) + ggtitle("Bray Curtis, PCo2 vs PCo3") + xlab(paste("PCo2:", round((100*pco.braycurtis$values$Eigenvalues/sum(pco.braycurtis$values$Eigenvalues))[2],1), "% Variation Explained")) + ylab(paste("PCo3:", round((100*pco.braycurtis$values$Eigenvalues/sum(pco.braycurtis$values$Eigenvalues))[3],1), "% Variation Explained")) + scale_color_discrete(name=curcond), vp = viewport(layout.pos.row = 1, layout.pos.col = 2))
-
-    print(ggplot(plot.pco.weighted.UniFrac, aes(x=Axis.1, y=Axis.2, color=plot.pco.weighted.UniFrac[,curcond])) + geom_point(alpha=0.5) + theme_bw() + ggtitle("Weighted UniFrac, PCo1 vs PCo2") + theme(plot.title=element_text(size=10), axis.text=element_text(size=8), aspect.ratio = 1, axis.title=element_text(size=8,face="bold")) + xlab(paste("PCo1:", round((100*pco.weighted.UniFrac$values$Eigenvalues/sum(pco.weighted.UniFrac$values$Eigenvalues))[1],1), "% Variation Explained")) + ylab(paste("PCo2:", round((100*pco.weighted.UniFrac$values$Eigenvalues/sum(pco.weighted.UniFrac$values$Eigenvalues))[2],1), "% Variation Explained")) + scale_color_discrete(name=curcond), vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
-    print(ggplot(plot.pco.weighted.UniFrac, aes(x=Axis.2, y=Axis.3, color=plot.pco.weighted.UniFrac[,curcond])) + geom_point(alpha=0.5) + theme_bw() + ggtitle("Weighted UniFrac, PCo2 vs PCo3") + theme(plot.title=element_text(size=10), axis.text=element_text(size=8), aspect.ratio = 1, axis.title=element_text(size=8,face="bold")) + xlab(paste("PCo2:", round((100*pco.weighted.UniFrac$values$Eigenvalues/sum(pco.weighted.UniFrac$values$Eigenvalues))[2],1), "% Variation Explained")) + ylab(paste("PCo3:", round((100*pco.weighted.UniFrac$values$Eigenvalues/sum(pco.weighted.UniFrac$values$Eigenvalues))[3],1), "% Variation Explained")) + scale_color_discrete(name=curcond), vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
-
-    print(ggplot(plot.pco.unweighted.UniFrac, aes(x=Axis.1, y=Axis.2, color=plot.pco.unweighted.UniFrac[,curcond])) + geom_point(alpha=0.5) + theme_bw() + ggtitle("Unweighted UniFrac, PCo1 vs PCo2") + theme(plot.title=element_text(size=10), axis.text=element_text(size=8), aspect.ratio = 1, axis.title=element_text(size=8,face="bold")) + xlab(paste("PCo1:", round((100*pco.unweighted.UniFrac$values$Eigenvalues/sum(pco.unweighted.UniFrac$values$Eigenvalues))[1],1), "% Variation Explained")) + ylab(paste("PCo2:", round((100*pco.unweighted.UniFrac$values$Eigenvalues/sum(pco.unweighted.UniFrac$values$Eigenvalues))[2],1), "% Variation Explained")) + scale_color_discrete(name=curcond), vp = viewport(layout.pos.row = 3, layout.pos.col = 1))
-    print(ggplot(plot.pco.unweighted.UniFrac, aes(x=Axis.2, y=Axis.3, color=plot.pco.unweighted.UniFrac[,curcond])) + geom_point(alpha=0.5) + theme_bw() + ggtitle("Unweighted UniFrac, PCo2 vs PCo3") + theme(plot.title=element_text(size=10), axis.text=element_text(size=8), aspect.ratio = 1, axis.title=element_text(size=8,face="bold")) + xlab(paste("PCo2:", round((100*pco.unweighted.UniFrac$values$Eigenvalues/sum(pco.unweighted.UniFrac$values$Eigenvalues))[2],1), "% Variation Explained")) + ylab(paste("PCo3:", round((100*pco.unweighted.UniFrac$values$Eigenvalues/sum(pco.unweighted.UniFrac$values$Eigenvalues))[3],1), "% Variation Explained")) + scale_color_discrete(name=curcond), vp = viewport(layout.pos.row = 3, layout.pos.col = 2))
+  if(METRIC=="unweightedunifrac"){
+    print("Doing Unweighted UniFrac...")
+    unifracs <- GUniFrac::GUniFrac(t(sub.OTUlevel),filtered.TREE, alpha=c(0, 0.5, 1))$unifracs
+    DISTMATRIX <- unifracs[, , "d_UW"] # Unweighted UniFrac
+    METRIC="Unweighted UniFrac"
+  } else if(METRIC=="weightedunifrac") {
+    print("Doing Weighted UniFrac...")
+    unifracs <- GUniFrac::GUniFrac(t(sub.OTUlevel),filtered.TREE, alpha=c(0, 0.5, 1))$unifracs
+    DISTMATRIX  <- unifracs[, , "d_1"] # Weighted UniFrac as per ?GUniFrac
+    METRIC="Weighted UniFrac"
+  } else if(METRIC=="braycurtis"){
+    print("Doing Bray Curtis...")
+    DISTMATRIX<-as.matrix(vegan::vegdist(t(sub.OTUlevel), method="bray", binary=FALSE, diag=FALSE, upper=FALSE))
+    METRIC="Bray Curtis"
+  } else if(METRIC=="jsd"){
+    DISTMATRIX<-CalcJSDivergence(sub.OTUlevel, by_rows=FALSE)
+    METRIC="Jensen-Shannon Divergence"
   }
-  dev.off()
 
-  print("--->Done")
+  PCO<-ape::pcoa(DISTMATRIX)
 
+  PLOT<-merge(as.data.frame(PCO$vectors), METADATA[rownames(PCO$vectors),], by="row.names", all=T )
+
+
+  if(missing(COLOR)){COLOR=rownames(METADATA)} else{
+    ADONIS<-vegan::adonis(DISTMATRIX ~ METADATA[rownames(DISTMATRIX),COLOR], permutations=999)
+    print(paste0(COLOR, "-> ADONIS P=", ADONIS$aov.tab$`Pr(>F)`[1], " R2=", signif(ADONIS$aov.tab$R2[1],3)))
+    COLOR<-METADATA[[COLOR]]
+  }
+  if(missing(SHAPE)){SHAPE=rep("Sample", nrow(METADATA))} else{
+    ADONIS<-vegan::adonis(DISTMATRIX ~ METADATA[rownames(DISTMATRIX),SHAPE], permutations=999)
+    print(paste0(SHAPE, "-> ADONIS P=", ADONIS$aov.tab$`Pr(>F)`[1], " R2=", signif(ADONIS$aov.tab$R2[1],3)))
+    SHAPE<-METADATA[[SHAPE]]
+  }
+
+    FINALPLOT<-(ggplot(PLOT, aes(x=Axis.1, y=Axis.2, color=COLOR, shape=SHAPE))
+          + geom_point(alpha=0.5) + theme_bw()
+          + labs(color=curcond)
+          + theme(plot.title=element_text(size=10), axis.text=element_text(size=8), aspect.ratio = 1, axis.title=element_text(size=8,face="bold"))
+          + ggtitle(METRIC)
+          + xlab(paste0("PCo", AXIS[1],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[1],1), "% Variation Explained"))
+          + ylab(paste0("PCo", AXIS[2],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[2],1), "% Variation Explained"))
+          )
+
+return(FINALPLOT)
 }
