@@ -67,14 +67,18 @@ if(missing(AXIS)){AXIS=c(1,2)}
     SHAPES<-METADATA[[SHAPE]]
   }
 
-    FINALPLOT<-(ggplot(PLOT, aes(x=Axis.1, y=Axis.2, color=COLORS, shape=SHAPES))
-          + geom_point(alpha=0.5) + theme_bw()
-          + labs(color=COLOR, shape=SHAPE)
+    FINALPLOT<-(ggplot(PLOT, aes(x=get(paste0("Axis.",AXIS[1])), y=get(paste0("Axis.",AXIS[2]))))
+          + theme_bw()
           + theme(plot.title=element_text(size=10), axis.text=element_text(size=8), aspect.ratio = 1, axis.title=element_text(size=8,face="bold"))
           + ggtitle(METRIC)
           + xlab(paste0("PCo", AXIS[1],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[1],1), "% Variation Explained"))
           + ylab(paste0("PCo", AXIS[2],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[2],1), "% Variation Explained"))
           )
+
+    if(missing(COLOR) & missing(SHAPE)){FINALPLOT<-FINALPLOT +geom_point(aes(alpha=0.5))+theme(legend.position="none")}
+    else if (!missing(SHAPE) & !missing(COLOR)){FINALPLOT<-FINALPLOT+ geom_point(aes(shape=SHAPES, color=COLORS), alpha=0.5) + labs(color=COLOR, shape=SHAPE)}
+    else if (!missing(SHAPE)){FINALPLOT<-FINALPLOT+ geom_point(aes(shape=SHAPES), alpha=0.5) + labs(shape=SHAPE)}
+    else if (!missing(COLOR)){FINALPLOT<-FINALPLOT+ geom_point(aes(color=COLORS), alpha=0.5) + labs(color=COLOR)}
 
 return(FINALPLOT)
 }
