@@ -74,7 +74,7 @@ if (!missing(USERORDER)){
   }
 
 
-
+if(PLOTMETHOD=="heatmap.2"){
 HTMP2<-heatmap.2(as.matrix(OTUTABLE),
             dendrogram=DEND,
             Rowv=TRUE,
@@ -89,19 +89,20 @@ HTMP2<-heatmap.2(as.matrix(OTUTABLE),
             margins=c(12,20),
             symbreaks=FALSE,
             symkey=FALSE
-  )
+  )}
 
 
 
 m.OTUTABLE<-melt(OTUTABLE, na.rm = T)
 colnames(m.OTUTABLE)<-c("Taxa","Sample","Abundance")
+if(PLOTMETHOD=="ggplot2"){
 P<-(ggplot(m.OTUTABLE, aes(x=Sample,y=factor(Taxa, levels=rev(roworder)), fill=Abundance, include.lowest = T))
     + geom_tile()
     + theme_bw()
     + theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 6), axis.text.y = element_text(size=6))
     + labs(x="Sample", y="Taxa")
     + scale_fill_gradientn(colors=c("black","blue", "cyan","green","yellow","red"), name=paste0(TRANSFORM, " Abundance"))
-)
+)}
 
 if(!missing(CATEGORY)){for(i in 1:(length(unique(METADATA[[CATEGORY]]))-1)){
   level=levels(METADATA[[CATEGORY]])[i]
