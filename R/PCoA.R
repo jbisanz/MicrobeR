@@ -23,10 +23,10 @@ PCoA<-function(METRIC,METADATA,OTUTABLE, TREE, COLOR, SHAPE, CONDS, SUBSAMPLE, A
   if(missing(SUBSAMPLE) || SUBSAMPLE==TRUE){
       DEPTH<-min(colSums(OTUTABLE))
       sub.OTUlevel<-Subsample.Table(OTUTABLE,DEPTH)
-      filtered.TREE<-prune_taxa(rownames(sub.OTUlevel), tree)
+      if(!missing(TREE)){filtered.TREE<-prune_taxa(rownames(sub.OTUlevel), tree)}
   } else {
      sub.OTUlevel<-OTUTABLE
-     filtered.TREE<-TREE
+     if(!missing(TREE)){filtered.TREE<-TREE}
   }
 
 if(missing(AXIS)){AXIS=c(1,2)}
@@ -71,8 +71,8 @@ if(missing(AXIS)){AXIS=c(1,2)}
           + theme_bw()
           + theme(plot.title=element_text(size=10), axis.text=element_text(size=8), aspect.ratio = 1, axis.title=element_text(size=8,face="bold"))
           + ggtitle(METRIC)
-          + xlab(paste0("PCo", AXIS[1],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[1],1), "% Variation Explained"))
-          + ylab(paste0("PCo", AXIS[2],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[2],1), "% Variation Explained"))
+          + xlab(paste0("PCo", AXIS[1],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[1]],1), "% Variation Explained"))
+          + ylab(paste0("PCo", AXIS[2],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[2]],1), "% Variation Explained"))
           )
 
     if(missing(COLOR) & missing(SHAPE)){FINALPLOT<-FINALPLOT +geom_point(aes(alpha=0.5))+theme(legend.position="none")}
