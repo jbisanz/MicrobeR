@@ -17,6 +17,6 @@ Merge.Replicates(OTUTABLE, METADATA, CATEGORY)
 A list of [[1]] new Feature/OTU/SV table and [[2]] collapsed metadata file
 }
 \description{
-Collapses a table via aggregate FUN=sum based on a provided column in the datatable
+Collapses a table via aggregate FUN=sum based on a provided column in the datatable.
 }
 

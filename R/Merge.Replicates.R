@@ -1,6 +1,6 @@
 #' \code{Merge.Replicates} Sum counts together for replicates (ex. pcr/extraction/sequencing run)
 #'
-#' @description Collapses a table via aggregate FUN=sum based on a provided column in the datatable
+#' @description Collapses a table via aggregate FUN=sum based on a provided column in the datatable.
 #'
 #' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
 #' @param METADATA A fraction to use to filter

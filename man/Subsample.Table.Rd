@@ -17,6 +17,6 @@ Subsample.Table(OTUTABLE, DEPTH, SEED)
 Subsampled Table
 }
 \description{
-Takes a Feature/OTU/SV table where samples are columns and feature names are row names, subsamples using VEGAN implementation using randomization seed if provided. Note: samples with replacement
+Takes a Feature/OTU/SV table where samples are columns and feature names are row names, subsamples using VEGAN implementation using randomization seed if provided. Note: samples without replacement
 }
 

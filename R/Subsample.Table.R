@@ -1,5 +1,5 @@
 #' \code{Subsample.Table} Rarify/Subsample a Feature
-#' @description Takes a Feature/OTU/SV table where samples are columns and feature names are row names, subsamples using VEGAN implementation using randomization seed if provided. Note: samples with replacement
+#' @description Takes a Feature/OTU/SV table where samples are columns and feature names are row names, subsamples using VEGAN implementation using randomization seed if provided. Note: samples without replacement
 #'
 #' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
 #' @param DEPTH Count depth, defaults to min(colSums(OTUTABLE)) if not passed

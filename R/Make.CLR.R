@@ -4,11 +4,11 @@
 #'   Gregory B. Gloor, Gregor Reid; Canadian Journal of Microbiology, 2016, 62:692-703, 10.1139/cjm-2015-0821
 #'
 #' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
-#' @return Table of CLR-normalized Abundances
+#' @return Table of CLR-normalized Abundances (log2)
 #' @export
 
 Make.CLR<-function(TABLE){
   TABLE<-TABLE+0.5
-  TABLE<-apply(log2(TABLE),2, function(column){(column-mean(column))})
+  TABLE<-apply(TABLE,2, function(column){log2(column)-mean(log2(column))})
   return(TABLE)
 }

@@ -17,6 +17,8 @@
 
 PCoA<-function(METRIC,METADATA,OTUTABLE, TREE, COLOR, SHAPE, CONDS, SUBSAMPLE, AXIS){
 
+  if(missing(METRIC)){METRIC="braycurtis"}
+
   if(missing(TREE) & (METRIC=="weightedunifrac" | METRIC=="unweightedunifrac")){stop("ERROR: UniFrac requested, but tree not supplied...")}
 
 
@@ -46,7 +48,7 @@ if(missing(AXIS)){AXIS=c(1,2)}
     DISTMATRIX<-as.matrix(vegan::vegdist(t(sub.OTUlevel), method="bray", binary=FALSE, diag=FALSE, upper=FALSE))
     METRIC="Bray Curtis"
   } else if(METRIC=="jsd"){
-    DISTMATRIX<-CalcJSDivergence(sub.OTUlevel, by_rows=FALSE)
+    DISTMATRIX<-textmineR::CalcJSDivergence(sub.OTUlevel, by_rows=FALSE)
     METRIC="Jensen-Shannon Divergence"
   }
 

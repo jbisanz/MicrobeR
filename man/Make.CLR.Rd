@@ -10,7 +10,7 @@ Make.CLR(TABLE)
 \item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
 }
 \value{
-Table of CLR-normalized Abundances
+Table of CLR-normalized Abundances (log2)
 }
 \description{
 Takes a table of Features/OTUs/SVs and converts centered log ratio abundances. See:

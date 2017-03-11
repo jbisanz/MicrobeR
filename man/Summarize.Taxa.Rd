@@ -9,13 +9,13 @@ Summarize.Taxa(OTUTABLE, TAXONOMY)
 \arguments{
 \item{OTUTABLE}{Table of feature/OTU/SV COUNTS where Samples are columns, and IDs are row names}
 
-\item{TAXONOMY}{Table of taxonomies to aggregate on as identified above}
+\item{TAXONOMY}{Table of taxonomies to aggregate on as identified above wherein the column names correspond to the taxonomic level}
 }
 \value{
 List of data frames of each level. Access by TABLE[[i]] where i is taxonomic level
 }
 \description{
-Summarizes through the first 7 levels of taxonomy of OTUs/SVs where in the levels are labbeled as-
+Summarizes through the first 7 levels of taxonomy of OTUs/SVs where in the levels are labeled as:
 1-Kingdom
 2-Phylum
 3-Class
