@@ -10,17 +10,20 @@
 #' @param SHAPE Metadata column to shape samples by. Defaults to none.
 #' @param SUBSAMPLE Should table be subsampled? TRUE/FALSE (default: TRUE)
 #' @param AXIS Which Axis should be plotted? Expects a numeric vector of length 2. defaults to Pco1 and Pco2 AXIS=c(1,2)
+#' @param ADONIS Should ADONIS test be applied ? TRUE/FALSE (default TRUE)
+
 #'
-#' @usage PCoA(METRIC="braycurtis", METADATA=experiment_metadata, OTUTABLE=otutable, TREE=ggtree, COLOR="Time", SHAPE="Group", SUBSAMPLE=TRUE, AXIS=c(1,2))
+#' @usage PCoA(METRIC="braycurtis", METADATA=experiment_metadata, OTUTABLE=otutable, TREE=ggtree, COLOR="Time", SHAPE="Group", SUBSAMPLE=TRUE, AXIS=c(1,2),)
 #' @return Returns a ggplot
 #' @export
 
-PCoA<-function(METRIC,METADATA,OTUTABLE, TREE, COLOR, SHAPE, CONDS, SUBSAMPLE, AXIS){
+PCoA<-function(METRIC,METADATA,OTUTABLE, TREE, COLOR, SHAPE, CONDS, SUBSAMPLE, AXIS, ADONIS){
 
   if(missing(METRIC)){METRIC="braycurtis"}
 
   if(missing(TREE) & (METRIC=="weightedunifrac" | METRIC=="unweightedunifrac")){stop("ERROR: UniFrac requested, but tree not supplied...")}
 
+  if(missing(ADONIS)){ADONIS=TRUE}
 
   if(missing(SUBSAMPLE) || SUBSAMPLE==TRUE){
       DEPTH<-min(colSums(OTUTABLE))
@@ -57,15 +60,21 @@ if(missing(AXIS)){AXIS=c(1,2)}
   PLOT<-merge(as.data.frame(PCO$vectors), METADATA[rownames(PCO$vectors),], by="row.names", all=T )
 
 
-  if(missing(COLOR)){COLORS=rownames(METADATA)} else{
+  if(missing(COLOR)){COLORS=rownames(METADATA)} else if (ADONIS==TRUE){
     ADONIS<-vegan::adonis(DISTMATRIX ~ METADATA[rownames(DISTMATRIX),COLOR], permutations=999)
     print(paste0(COLOR, "-> ADONIS P=", ADONIS$aov.tab$`Pr(>F)`[1], " R2=", signif(ADONIS$aov.tab$R2[1],3)))
     COLORS<-METADATA[[COLOR]]
+  } else {
+    COLORS<-METADATA[[COLOR]]
+    }
 
-  }
-  if(missing(SHAPE)){SHAPES=rep("Sample", nrow(METADATA))} else{
+
+
+  if(missing(SHAPE)){SHAPES=rep("Sample", nrow(METADATA))} else if (ADONIS==TRUE){
     ADONIS<-vegan::adonis(DISTMATRIX ~ METADATA[rownames(DISTMATRIX),SHAPE], permutations=999)
     print(paste0(SHAPE, "-> ADONIS P=", ADONIS$aov.tab$`Pr(>F)`[1], " R2=", signif(ADONIS$aov.tab$R2[1],3)))
+    SHAPES<-METADATA[[SHAPE]]
+  } else {
     SHAPES<-METADATA[[SHAPE]]
   }
 

@@ -27,7 +27,9 @@ importFrom(ggplot2, theme)
 importFrom(ggplot2, theme_bw)
 importFrom(ggplot2, element_text)
 importFrom(ggplot2, ggtitle)
+importFrom(ggplot2, facet_wrap)
 importFrom(reshape2, melt)
+importFrom(phyloseq, rarefy_even_depth)
 
 
 
@@ -50,3 +52,5 @@ export(Make.Tree)
 export(PCoA.PDF)
 export(Generate.Test.Data)
 export(Nice.Table)
+export(Microbiome.Barplot)
+

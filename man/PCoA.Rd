@@ -4,7 +4,7 @@
 \alias{PCoA}
 \title{\code{PCoA} Generate Distance/Dissimilarities and plot PCoA}
 \usage{
-PCoA(METRIC="braycurtis", METADATA=experiment_metadata, OTUTABLE=otutable, TREE=ggtree, COLOR="Time", SHAPE="Group", SUBSAMPLE=TRUE, AXIS=c(1,2))
+PCoA(METRIC="braycurtis", METADATA=experiment_metadata, OTUTABLE=otutable, TREE=ggtree, COLOR="Time", SHAPE="Group", SUBSAMPLE=TRUE, AXIS=c(1,2),)
 }
 \arguments{
 \item{METRIC}{Desired beta-diversity metric, options are Bray Curtis (braycurtis), Weighted UniFrac (weightedunifrac), UnWeighted UniFrac (unweightedunifrac), Jensen-Shannon diversgence (jsd).}
@@ -22,6 +22,8 @@ PCoA(METRIC="braycurtis", METADATA=experiment_metadata, OTUTABLE=otutable, TREE=
 \item{SUBSAMPLE}{Should table be subsampled? TRUE/FALSE (default: TRUE)}
 
 \item{AXIS}{Which Axis should be plotted? Expects a numeric vector of length 2. defaults to Pco1 and Pco2 AXIS=c(1,2)}
+
+\item{ADONIS}{Should ADONIS test be applied ? TRUE/FALSE (default TRUE)}
 }
 \value{
 Returns a ggplot

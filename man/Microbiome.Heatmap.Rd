@@ -18,9 +18,9 @@ Microbiome.Heatmap(OTUTABLE, METADATA, NTOPFEATURES, TRANSFORM, CATEGORY, ORDER,
 
 \item{CATEGORY}{(optional) Category to create separate blocks (optional, defaults to order of samples in otutable)}
 
-\item{ORDER}{(optional) An order of levels in Category to use, (optional, defaults to order of unique(Category))}
+\item{ORDER}{(optional) An order of levels in Category to use, (optional, defaults to order of unique(Category)). Only works with heatmap.2 method.}
 
-\item{USERORDER}{(optional) A vector with user specified sample order for plot with NA for separators, overides metadata, category and order}
+\item{USERORDER}{(optional) A vector with user specified sample order for plot with NA for separators, overides metadata, category and order. Only works with heatmap.2 method.}
 
 \item{PLOTMETHOD}{(optional) Can be plotted using heatmap.2 or ggplot2, defaults to ggplot2}
 }

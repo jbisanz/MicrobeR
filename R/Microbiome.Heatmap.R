@@ -7,8 +7,8 @@
 #' @param TRANSFORM Method to transform data with for plotting, valid options are log2, log10, clr, percent, zscore or none (defaults to log10). None would be ideal if for example a list of fold changes was supplied. Zscore is calculated on clr.
 #' @param NTOPFEATURES The N most abundance features to plot (defaults to all). Calculated by taking largest row sums of percentage data
 #' @param CATEGORY (optional) Category to create separate blocks (optional, defaults to order of samples in otutable)
-#' @param ORDER (optional) An order of levels in Category to use, (optional, defaults to order of unique(Category))
-#' @param USERORDER (optional) A vector with user specified sample order for plot with NA for separators, overides metadata, category and order
+#' @param ORDER (optional) An order of levels in Category to use, (optional, defaults to order of unique(Category)). Only works with heatmap.2 method.
+#' @param USERORDER (optional) A vector with user specified sample order for plot with NA for separators, overides metadata, category and order. Only works with heatmap.2 method.
 #' @param PLOTMETHOD (optional) Can be plotted using heatmap.2 or ggplot2, defaults to ggplot2
 #' @return Prints a heat map
 #' @export
@@ -95,6 +95,7 @@ HTMP2<-heatmap.2(as.matrix(OTUTABLE),
 
 m.OTUTABLE<-melt(OTUTABLE, na.rm = T)
 colnames(m.OTUTABLE)<-c("Taxa","Sample","Abundance")
+m.OTUTABLE<-merge(m.OTUTABLE, METADATA, by.x="Sample", by.y="row.names")
 if(PLOTMETHOD=="ggplot2"){
 P<-(ggplot(m.OTUTABLE, aes(x=Sample,y=factor(Taxa, levels=rev(roworder)), fill=Abundance, include.lowest = T))
     + geom_tile()
@@ -102,22 +103,15 @@ P<-(ggplot(m.OTUTABLE, aes(x=Sample,y=factor(Taxa, levels=rev(roworder)), fill=A
     + theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 6), axis.text.y = element_text(size=6))
     + labs(x="Sample", y="Taxa")
     + scale_fill_gradientn(colors=c("black","blue", "cyan","green","yellow","red"), name=paste0(TRANSFORM, " Abundance"))
-)}
+    )
 
-if(!missing(CATEGORY)){for(i in 1:(length(unique(METADATA[[CATEGORY]]))-1)){
-  level=levels(METADATA[[CATEGORY]])[i]
-  xloc<-sum(METADATA[[CATEGORY]]==level)
-  xloc<-xloc+sum(METADATA[[CATEGORY]] %in% levels(METADATA[[CATEGORY]])[0:(match(level, levels(METADATA[[CATEGORY]]))-1)])
-    P<-P + geom_vline(xintercept=xloc+0.5, colour="white", linetype="dashed", size=1)
+  if(!missing(CATEGORY)){
+    P<-P + facet_grid(~get(CATEGORY), margins=FALSE, drop=TRUE, scales = "free", space = "free")
+    }
+
 }
 
-for (level in unique(METADATA[[CATEGORY]])){
-  xloc<-sum(METADATA[[CATEGORY]]==level)/2
-  xloc<-xloc+sum(METADATA[[CATEGORY]] %in% levels(METADATA[[CATEGORY]])[0:(match(level, levels(METADATA[[CATEGORY]]))-1)])
-      P<-P + annotate("text", x=xloc, y=nrow(OTUTABLE)+1, label=level, size=4, vjust=1, hjust=0.5)
-}}
-
-if(PLOTMETHOD=="ggplot2"){ print(P)}
-else if (PLOTMETHOD=="heatmap.2") {print(HTMP2)}
+if(PLOTMETHOD=="ggplot2"){ return(P)}
+else if (PLOTMETHOD=="heatmap.2") {return(HTMP2)}
 
 }
