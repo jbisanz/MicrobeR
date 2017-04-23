@@ -4,7 +4,7 @@
 \alias{Read.Filter}
 \title{\code{Read.Filter} Remove samples with less than a user specified number of reads.}
 \usage{
-Read.Filter(OTUTABLE, METADATA, READCUTOFF)
+Read.Filter(OTUTABLE, METADATA, READCUTOFF, VERBOSE, PLOT)
 }
 \arguments{
 \item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
@@ -12,9 +12,13 @@ Read.Filter(OTUTABLE, METADATA, READCUTOFF)
 \item{METADATA}{A fraction to use to filter}
 
 \item{READCUTOFF}{Minimum number of reads to pass filter}
+
+\item{VERBOSE}{Should lists of which samples were removed or kept be printed to screen? (defaults to TRUE)}
+
+\item{PLOT}{Should a plot be made? (defaults to TRUE)}
 }
 \value{
-A list containing new OTUtable and Metadata. Also creates a histogram of read counts
+A list containing new OTUtable and Metadata. Also creates a histogram of read counts.
 }
 \description{
 \code{Read.Filter} Remove samples with less than a user specified number of reads.
