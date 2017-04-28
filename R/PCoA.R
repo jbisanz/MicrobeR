@@ -63,9 +63,9 @@ if(missing(AXIS)){AXIS=c(1,2)}
   if(missing(COLOR)){COLORS=rownames(METADATA)} else if (ADONIS==TRUE){
     ADONIS<-vegan::adonis(DISTMATRIX ~ METADATA[rownames(DISTMATRIX),COLOR], permutations=999)
     print(paste0(COLOR, "-> ADONIS P=", ADONIS$aov.tab$`Pr(>F)`[1], " R2=", signif(ADONIS$aov.tab$R2[1],3)))
-    COLORS<-METADATA[[COLOR]]
+    COLORS<-PLOT[[COLOR]]
   } else {
-    COLORS<-METADATA[[COLOR]]
+    COLORS<-PLOT[[COLOR]]
     }
 
 
@@ -73,9 +73,9 @@ if(missing(AXIS)){AXIS=c(1,2)}
   if(missing(SHAPE)){SHAPES=rep("Sample", nrow(METADATA))} else if (ADONIS==TRUE){
     ADONIS<-vegan::adonis(DISTMATRIX ~ METADATA[rownames(DISTMATRIX),SHAPE], permutations=999)
     print(paste0(SHAPE, "-> ADONIS P=", ADONIS$aov.tab$`Pr(>F)`[1], " R2=", signif(ADONIS$aov.tab$R2[1],3)))
-    SHAPES<-METADATA[[SHAPE]]
+    SHAPES<-PLOT[[SHAPE]]
   } else {
-    SHAPES<-METADATA[[SHAPE]]
+    SHAPES<-PLOT[[SHAPE]]
   }
 
     FINALPLOT<-(ggplot(PLOT, aes(x=get(paste0("Axis.",AXIS[1])), y=get(paste0("Axis.",AXIS[2]))))

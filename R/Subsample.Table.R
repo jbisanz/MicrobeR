@@ -9,16 +9,6 @@
 
 Subsample.Table<-function(OTUTABLE,DEPTH, SEED){
 
-  #test=data.frame(Samp1=sample(1:100,20), Samp2=sample(1:100,20))
-
-  #if(missing(DEPTH)){DEPTH=min(colSums(OTUTABLE))}
-  #if(!missing(SEED)){set.seed(SEED)}
-
-  #print(paste("Subsampling OTU table to", DEPTH))
-  #subsampled.OTUTABLE<-t(rrarefy(t(OTUTABLE),DEPTH)) #expecting the transpose for otu table layout so transpose then transpose back
-  #subsampled.OTUTABLE<-subsampled.OTUTABLE[rowSums(subsampled.OTUTABLE)>0,] #remove now zero count OTUs
-  #print(paste("...sampled to",DEPTH, "reads with", nrow(subsampled.OTUTABLE), "taxa"))
-
   if(missing(DEPTH)){DEPTH=min(colSums(OTUTABLE))}
   if(missing(SEED)){SEED=182}
 

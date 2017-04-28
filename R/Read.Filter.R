@@ -1,11 +1,11 @@
 #' \code{Read.Filter} Remove samples with less than a user specified number of reads.
 #'
 #' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
-#' @param METADATA A fraction to use to filter
+#' @param METADATA Metadata file where samples are row names.
 #' @param READCUTOFF Minimum number of reads to pass filter
 #' @param VERBOSE Should lists of which samples were removed or kept be printed to screen? (defaults to TRUE)
 #' @param PLOT Should a plot be made? (defaults to TRUE)
-#' @return A list containing new OTUtable and Metadata. Also creates a histogram of read counts.
+#' @return A list containing new table of features[[1]] (Ex. OTU table) and Metadata[[2]].
 #' @export
 
 Read.Filter<-function(OTUTABLE,METADATA,READCUTOFF, VERBOSE, PLOT){

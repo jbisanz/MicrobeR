@@ -1,7 +1,7 @@
-#' \code{Filter.OTUs.Fraction} Remove Features/OTUs/SVs representing less than a certain specified fraction
+#' \code{Filter.OTUs.Fraction} Remove Features/OTUs/SVs representing less than a certain specified fraction.
 #'
-#' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
-#' @param MINFRACTION A fraction to use to filter
+#' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names.
+#' @param MINFRACTION A fraction to use to filter.
 #' @return Filtered Table
 #' @export
 

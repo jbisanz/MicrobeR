@@ -1,17 +1,20 @@
-#' \code{Generate.Test.Data} Generate random OTU table and metadata for testing purposes
+#' \code{Generate.Test.Data} Generate random OTU table and metadata for testing purposes.
 #'
-#' @description Samples random numbers between 1 and 1000 for read counts and creates a categorical variable for metadata into group A or B. Also gives phylogenetic tree by dropping tips from the gg 97% tree.
+#' @description Creates a mock dataset based on a user defined number of samples and matching metadata for testing purposes. Returns a categorical variable called TestGroup and a continuous number called TestContinuous.
 #'
-
 #' @return Returns list of mock OTU table [[1]] and metadata [[2]]
 #' @export
 #'
 #'
 
-Generate.Test.Data<-function(){
+Generate.Test.Data<-function(NSAMP, NFEATURE){
+Test.OTUs<-data.frame(matrix(ncol = NSAMP, nrow = NFEATURE))
+Test.OTUs<-apply(Test.OTUs, 2, function(x){sample(1000, NFEATURE)})
+colnames(Test.OTUs)=paste0("Sample_", seq(1,NSAMP,1))
+rownames(Test.OTUs)<-paste0("OTU_", seq(1,NFEATURE,1))
 
-Test.OTUs<-data.frame(row.names=sample(), SampleA=sample(1:1000,100),SampleB=sample(1:1000,100),SampleC=sample(1:1000,100),SampleD=sample(1:1000,100))
-Test.Meta<-data.frame(row.names=c("SampleA","SampleB","SampleC","SampleD"), TestGroup=sample(c("GroupA","GroupB"), 4, replace=T), TestContinuous=sample(1:100, 4))
+
+Test.Meta<-data.frame(row.names=paste0("Sample_", seq(1,NSAMP,1)), TestGroup=sample(c("GroupA","GroupB"), NSAMP, replace=T), TestContinuous=sample(1:100, NSAMP))
 
 
 return(list(Test.OTUs, Test.Meta))

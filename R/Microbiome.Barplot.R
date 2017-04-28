@@ -1,10 +1,10 @@
-#' \code{Microbiome.Barplot.R} Create a stacked barplot showing composition of samples,
-#' @description Uses ggplot2 to create a stacked barplot, for example on phylum level abundances. The most abundant features (defaults to 10, based on rowMeans) will be plotted unless user specified. Anything of over 10 features will use default coloring which will be very difficult to interpret.
+#' \code{Microbiome.Barplot.R} Create a stacked barplot showing composition of samples.
+#' @description Uses ggplot2 to create a stacked barplot, for example on phylum level abundances. The most abundant features (defaults to 10, based on rowMeans) will be plotted unless user specified. Anything of over 10 features will use default coloring which may be very difficult to interpret.
 #' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
 #' @param METADATA A Table of metadata where sample names are row names.
-#' @param NTOPLOT A number of features to plot
-#' @param CATEGORY A Metadata category to block samples by
-#' @return Subsampled Table
+#' @param NTOPLOT A number of features to plot.
+#' @param CATEGORY A Metadata category to block samples by (faceting via ggplot2)
+#' @return Barplot
 #' @export
 
 Microbiome.Barplot<-function(OTUTABLE,METADATA, NTOPLOT, CATEGORY){

@@ -1,6 +1,6 @@
 #' \code{Make.Tree.R} Generate a phylogenetic tree to and plot
 #'
-#' @description Takes a series of sequences and uses muscle and make_phylogeny (QIIME). Can be used with MacQIIME or QIIME. Will default to MacQIIME locations. A file called Feature_Seqs.tree will be created in your working directory for future use.  Uses midpoint rooting, and fasttree. NOTE: This is using system commands... might only work on mac and linux? If you are using windows reconsider your life choices.
+#' @description Takes a series of sequences and uses muscle and make_phylogeny (QIIME). Can be used with MacQIIME or QIIME. Will default to MacQIIME locations. A file called Feature_Seqs.tree will be created in your working directory for future use.  Uses midpoint rooting, and fasttree. NOTE: This is using system commands... probabily will only work on mac and linux. If you are using windows reconsider your life choices and consider dual booting Ubuntu.
 #' @param FEATURENAMES The names of your features/OTUs/SVs. Will be the row names of your input table in most cases.
 #' @param FEATURESEQS The corresponding sequences for each feature. If this is a dada2 table, then feature names are also feature seqs.
 #' @param MUSCLE (optional) The location of muscle, defaults to /macqiime/bin/muscle

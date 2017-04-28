@@ -2,7 +2,7 @@
 #'
 #' \code{Confidence.Filter.OTUs} Takes a table of FeaturesOTUs/SVs and filters for such that they are present in at least X samples with at least a total of Y reads
 #'
-#' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
+#' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and feature IDs are row names
 #' @param MINSAMPS A minimum number of samples for the feature/OTU/SV to be observed in
 #' @param MINREADS A minimum number of reads for a feature/OTUs/SV to be kept
 #' @return filtered.OTUTABLE
@@ -19,5 +19,4 @@ Confidence.Filter.OTUs<-function(OTUTABLE,MINSAMPS,MINREADS){
 
   print(paste("...After filtering there are", sum(filtered.OTUTABLE), "reads and", nrow(filtered.OTUTABLE), "OTUs"))
   return(filtered.OTUTABLE)
-
 }

@@ -1,15 +1,15 @@
-#' \code{Microbiome.Heatmap.R} Plot Heat map of microbiome data
+#' \code{Microbiome.Heatmap.R} Plot heat map of microbiome data
 #'
 #' @description Creates a heat map based based on user provided table. Transforms to log2(percent), log10(percent), or CLR as requested. For plotting purposes, a prior of 0.01% is added to the log percent abundances. Row clustering of ggplot2 output is by upgma of euclidean dist. If no metadata passed, column clustering will be applied in the heatmap.2 output.
 #'
-#' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
+#' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names.
 #' @param METADATA Metadata file to be used for blocking.
 #' @param TRANSFORM Method to transform data with for plotting, valid options are log2, log10, clr, percent, zscore or none (defaults to log10). None would be ideal if for example a list of fold changes was supplied. Zscore is calculated on clr.
 #' @param NTOPFEATURES The N most abundance features to plot (defaults to all). Calculated by taking largest row sums of percentage data
 #' @param CATEGORY (optional) Category to create separate blocks (optional, defaults to order of samples in otutable)
 #' @param ORDER (optional) An order of levels in Category to use, (optional, defaults to order of unique(Category)). Only works with heatmap.2 method.
 #' @param USERORDER (optional) A vector with user specified sample order for plot with NA for separators, overides metadata, category and order. Only works with heatmap.2 method.
-#' @param PLOTMETHOD (optional) Can be plotted using heatmap.2 or ggplot2, defaults to ggplot2
+#' @param PLOTMETHOD (optional) Can be plotted using ggplot2 or heatmap.2 (default: ggplot2).
 #' @return Prints a heat map
 #' @export
 

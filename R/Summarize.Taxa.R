@@ -10,7 +10,7 @@
 #'
 #' @param OTUTABLE Table of feature/OTU/SV COUNTS where Samples are columns, and IDs are row names
 #' @param TAXONOMY Table of taxonomies to aggregate on as identified above wherein the column names correspond to the taxonomic level
-#' @return List of data frames of each level. Access by TABLE[[i]] where i is taxonomic level
+#' @return List of data frames of each level. Access by TABLE[[i]] where i is taxonomic level above.
 #' @export
 
 
