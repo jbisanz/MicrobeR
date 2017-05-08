@@ -12,7 +12,7 @@ Summarize.Taxa(OTUTABLE, TAXONOMY)
 \item{TAXONOMY}{Table of taxonomies to aggregate on as identified above wherein the column names correspond to the taxonomic level}
 }
 \value{
-List of data frames of each level. Access by TABLE[[i]] where i is taxonomic level
+List of data frames of each level. Access by TABLE[[i]] where i is taxonomic level above.
 }
 \description{
 Summarizes through the first 7 levels of taxonomy of OTUs/SVs where in the levels are labeled as:
@@ -24,4 +24,3 @@ Summarizes through the first 7 levels of taxonomy of OTUs/SVs where in the level
 6-Genus
 7-Species
 }
-

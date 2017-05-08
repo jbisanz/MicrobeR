@@ -9,7 +9,7 @@ Read.Filter(OTUTABLE, METADATA, READCUTOFF, VERBOSE, PLOT)
 \arguments{
 \item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
 
-\item{METADATA}{A fraction to use to filter}
+\item{METADATA}{Metadata file where samples are row names.}
 
 \item{READCUTOFF}{Minimum number of reads to pass filter}
 
@@ -18,9 +18,8 @@ Read.Filter(OTUTABLE, METADATA, READCUTOFF, VERBOSE, PLOT)
 \item{PLOT}{Should a plot be made? (defaults to TRUE)}
 }
 \value{
-A list containing new OTUtable and Metadata. Also creates a histogram of read counts.
+A list containing new table of features[[1]] (Ex. OTU table) and Metadata[[2]].
 }
 \description{
 \code{Read.Filter} Remove samples with less than a user specified number of reads.
 }
-

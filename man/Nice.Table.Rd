@@ -2,7 +2,7 @@
 % Please edit documentation in R/Nice.Table.R
 \name{Nice.Table}
 \alias{Nice.Table}
-\title{\code{Nice.Table} Print interactive table for markdown documents using datatable from DT with the options for export preincluded.}
+\title{\code{Nice.Table} Print interactive table for markdown documents using datatable from DT with the options for export included.}
 \usage{
 Nice.Table(TABLE, NROW)
 }
@@ -12,6 +12,5 @@ Nice.Table(TABLE, NROW)
 \item{NROW}{(optional) number of rows to display per page, defaults to 10}
 }
 \description{
-Function for the following command DT::datatable(TABLE, extensions='Buttons', options=list(pageLength=LENGTH, dom='bfrtip', buttons=c('copy','csv','excel', 'pdf') ))
+Function to simplify the following command DT::datatable(TABLE, extensions='Buttons', options=list(pageLength=LENGTH, dom='bfrtip', buttons=c('copy','csv','excel', 'pdf') ))
 }
-

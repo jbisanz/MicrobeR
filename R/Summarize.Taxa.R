@@ -17,7 +17,7 @@
 Summarize.Taxa<-function(OTUTABLE, TAXONOMY){
   SUMMARIZED.TAXA<-list()
   for (i in 1:7){
-    print(paste("Now summarizing taxonomic level", i, "....."))
+    #print(paste("Now summarizing taxonomic level", i, "....."))
     if(i==1){TaxonomicLevel<-cbind(rownames(TAXONOMY),TAXONOMY$Kingdom)}
     if(i==2){TaxonomicLevel<-cbind(rownames(TAXONOMY),paste(TAXONOMY$Kingdom,TAXONOMY$Phylum,sep=";"))}
     if(i==3){TaxonomicLevel<-cbind(rownames(TAXONOMY),paste(TAXONOMY$Kingdom,TAXONOMY$Phylum,TAXONOMY$Class,sep=";"))}
@@ -49,7 +49,7 @@ Summarize.Taxa<-function(OTUTABLE, TAXONOMY){
     message("ERROR!!!!!!!!!!!!!!!, Reads went missing during taxa summary")
   }
   else{
-    message("No reads went missing during summarizing, returning summarized info")
+    #message("No reads went missing during summarizing, returning summarized info")
     return(SUMMARIZED.TAXA)
   }
 } #Takes an OTU table and a master data frame of OTUs to taxonomy, returns a list of dataframes where the list index is the taxonomic level, the 8th level is OTU

@@ -7,7 +7,7 @@
 Confidence.Filter.OTUs(OTUTABLE, MINSAMPS, MINREADS)
 }
 \arguments{
-\item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
+\item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and feature IDs are row names}
 
 \item{MINSAMPS}{A minimum number of samples for the feature/OTU/SV to be observed in}
 
@@ -19,4 +19,3 @@ filtered.OTUTABLE
 \description{
 \code{Confidence.Filter.OTUs} Takes a table of FeaturesOTUs/SVs and filters for such that they are present in at least X samples with at least a total of Y reads
 }
-

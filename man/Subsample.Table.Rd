@@ -19,4 +19,3 @@ Subsampled Table
 \description{
 Takes a Feature/OTU/SV table where samples are columns and feature names are row names. This was formerly using the VEGAN rrarefy function but was found to be slow on large numbers of samples (~3000). It is coded using a loop while the implementation in phyloseq is vectorized it would appear. Now this function is really just an alias for rarefy_even_depth from phyloseq. NOTE: Sampling with replacement!
 }
-

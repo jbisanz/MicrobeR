@@ -17,4 +17,3 @@ Takes a table of Features/OTUs/SVs and converts centered log ratio abundances. S
  Compositional analysis: a valid approach to analyze microbiome high-throughput sequencing data
   Gregory B. Gloor, Gregor Reid; Canadian Journal of Microbiology, 2016, 62:692-703, 10.1139/cjm-2015-0821
 }
-

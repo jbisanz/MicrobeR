@@ -2,13 +2,13 @@
 % Please edit documentation in R/Microbiome.Heatmap.R
 \name{Microbiome.Heatmap}
 \alias{Microbiome.Heatmap}
-\title{\code{Microbiome.Heatmap.R} Plot Heat map of microbiome data}
+\title{\code{Microbiome.Heatmap.R} Plot heat map of microbiome data}
 \usage{
 Microbiome.Heatmap(OTUTABLE, METADATA, NTOPFEATURES, TRANSFORM, CATEGORY, ORDER,
   USERORDER, PLOTMETHOD)
 }
 \arguments{
-\item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
+\item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names.}
 
 \item{METADATA}{Metadata file to be used for blocking.}
 
@@ -22,7 +22,7 @@ Microbiome.Heatmap(OTUTABLE, METADATA, NTOPFEATURES, TRANSFORM, CATEGORY, ORDER,
 
 \item{USERORDER}{(optional) A vector with user specified sample order for plot with NA for separators, overides metadata, category and order. Only works with heatmap.2 method.}
 
-\item{PLOTMETHOD}{(optional) Can be plotted using heatmap.2 or ggplot2, defaults to ggplot2}
+\item{PLOTMETHOD}{(optional) Can be plotted using ggplot2 or heatmap.2 (default: ggplot2).}
 }
 \value{
 Prints a heat map
@@ -30,4 +30,3 @@ Prints a heat map
 \description{
 Creates a heat map based based on user provided table. Transforms to log2(percent), log10(percent), or CLR as requested. For plotting purposes, a prior of 0.01% is added to the log percent abundances. Row clustering of ggplot2 output is by upgma of euclidean dist. If no metadata passed, column clustering will be applied in the heatmap.2 output.
 }
-

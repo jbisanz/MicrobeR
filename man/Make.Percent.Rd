@@ -15,4 +15,3 @@ Table of Percents
 \description{
 \code{Make.Percent} Takes a table of Features/OTUs/SVs and converts to Percentages (Sum to 100).
 }
-

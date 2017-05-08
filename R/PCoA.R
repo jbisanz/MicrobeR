@@ -38,13 +38,11 @@ if(missing(AXIS)){AXIS=c(1,2)}
 
   if(METRIC=="unweightedunifrac"){
     print("Doing Unweighted UniFrac...")
-    unifracs <- GUniFrac::GUniFrac(t(sub.OTUlevel),filtered.TREE, alpha=c(0, 0.5, 1))$unifracs
-    DISTMATRIX <- unifracs[, , "d_UW"] # Unweighted UniFrac
+    DISTMATRIX <- UniFrac(phyloseq(sub.OTUlevel, filtered.TREE), weighted=F)
     METRIC="Unweighted UniFrac"
   } else if(METRIC=="weightedunifrac") {
     print("Doing Weighted UniFrac...")
-    unifracs <- GUniFrac::GUniFrac(t(sub.OTUlevel),filtered.TREE, alpha=c(0, 0.5, 1))$unifracs
-    DISTMATRIX  <- unifracs[, , "d_1"] # Weighted UniFrac as per ?GUniFrac
+    DISTMATRIX <- UniFrac(phyloseq(sub.OTUlevel, filtered.TREE), weighted=T)
     METRIC="Weighted UniFrac"
   } else if(METRIC=="braycurtis"){
     print("Doing Bray Curtis...")

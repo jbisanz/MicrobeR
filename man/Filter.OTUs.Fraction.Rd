@@ -2,19 +2,18 @@
 % Please edit documentation in R/Filter.OTUs.Fraction.R
 \name{Filter.OTUs.Fraction}
 \alias{Filter.OTUs.Fraction}
-\title{\code{Filter.OTUs.Fraction} Remove Features/OTUs/SVs representing less than a certain specified fraction}
+\title{\code{Filter.OTUs.Fraction} Remove Features/OTUs/SVs representing less than a certain specified fraction.}
 \usage{
 Filter.OTUs.Fraction(OTUTABLE, MINFRACTION)
 }
 \arguments{
-\item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
+\item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names.}
 
-\item{MINFRACTION}{A fraction to use to filter}
+\item{MINFRACTION}{A fraction to use to filter.}
 }
 \value{
 Filtered Table
 }
 \description{
-\code{Filter.OTUs.Fraction} Remove Features/OTUs/SVs representing less than a certain specified fraction
+\code{Filter.OTUs.Fraction} Remove Features/OTUs/SVs representing less than a certain specified fraction.
 }
-

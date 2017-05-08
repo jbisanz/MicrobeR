@@ -2,14 +2,13 @@
 % Please edit documentation in R/Generate.Test.Data.R
 \name{Generate.Test.Data}
 \alias{Generate.Test.Data}
-\title{\code{Generate.Test.Data} Generate random OTU table and metadata for testing purposes}
+\title{\code{Generate.Test.Data} Generate random OTU table and metadata for testing purposes.}
 \usage{
-Generate.Test.Data()
+Generate.Test.Data(NSAMP, NFEATURE)
 }
 \value{
 Returns list of mock OTU table [[1]] and metadata [[2]]
 }
 \description{
-Samples random numbers between 1 and 1000 for read counts and creates a categorical variable for metadata into group A or B. Also gives phylogenetic tree by dropping tips from the gg 97% tree.
+Creates a mock dataset based on a user defined number of samples and matching metadata for testing purposes. Returns a categorical variable called TestGroup and a continuous number called TestContinuous.
 }
-

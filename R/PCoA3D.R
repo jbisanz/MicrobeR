@@ -21,7 +21,7 @@ PCoA3D<-function(METRIC,METADATA,OTUTABLE, TREE, COLOR, SHAPE, SUBSAMPLE, AXIS, 
 
   if(missing(METRIC)){METRIC="braycurtis"}
   if(missing(PALETTE) & !missing(COLOR)){PALETTE=rainbow(length(unique(METADATA[[COLOR]])))}
-  
+
   if(missing(TREE) & (METRIC=="weightedunifrac" | METRIC=="unweightedunifrac")){stop("ERROR: UniFrac requested, but tree not supplied...")}
 
   if(missing(SUBSAMPLE) || SUBSAMPLE==TRUE){
@@ -37,13 +37,11 @@ if(missing(AXIS)){AXIS=c(1,2,3)}
 
   if(METRIC=="unweightedunifrac"){
     print("Doing Unweighted UniFrac...")
-    unifracs <- GUniFrac::GUniFrac(t(sub.OTUlevel),filtered.TREE, alpha=c(0, 0.5, 1))$unifracs
-    DISTMATRIX <- unifracs[, , "d_UW"] # Unweighted UniFrac
+    DISTMATRIX <- UniFrac(phyloseq(sub.OTUlevel, filtered.TREE), weighted=F)
     METRIC="Unweighted UniFrac"
   } else if(METRIC=="weightedunifrac") {
     print("Doing Weighted UniFrac...")
-    unifracs <- GUniFrac::GUniFrac(t(sub.OTUlevel),filtered.TREE, alpha=c(0, 0.5, 1))$unifracs
-    DISTMATRIX  <- unifracs[, , "d_1"] # Weighted UniFrac as per ?GUniFrac
+    DISTMATRIX <- UniFrac(phyloseq(sub.OTUlevel, filtered.TREE), weighted=T)
     METRIC="Weighted UniFrac"
   } else if(METRIC=="braycurtis"){
     print("Doing Bray Curtis...")
@@ -61,37 +59,37 @@ if(missing(AXIS)){AXIS=c(1,2,3)}
 
 
 if(missing(COLOR) & missing(SHAPE)){
-  FINALPLOT<-(plot_ly(data = PLOT, type = "scatter3d", x = ~get(paste0("Axis.",AXIS[1])), y = ~get(paste0("Axis.",AXIS[2])), z = ~get(paste0("Axis.",AXIS[3])), 
-                      mode = "markers") %>% 
+  FINALPLOT<-(plot_ly(data = PLOT, type = "scatter3d", x = ~get(paste0("Axis.",AXIS[1])), y = ~get(paste0("Axis.",AXIS[2])), z = ~get(paste0("Axis.",AXIS[3])),
+                      mode = "markers") %>%
                 layout(scene = list(
-                  xaxis = list(title = paste0("PCo", AXIS[1],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[1]],1), "%")), 
-                  yaxis = list(title = paste0("PCo", AXIS[2],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[2]],1), "%")), 
+                  xaxis = list(title = paste0("PCo", AXIS[1],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[1]],1), "%")),
+                  yaxis = list(title = paste0("PCo", AXIS[2],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[2]],1), "%")),
                   zaxis = list(title = paste0("PCo", AXIS[3],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[3]],1), "%"))
-                )))    
+                )))
 } else if(!missing(COLOR) & missing(SHAPE)){
-FINALPLOT<-(plot_ly(data = PLOT, type = "scatter3d", x = ~get(paste0("Axis.",AXIS[1])), y = ~get(paste0("Axis.",AXIS[2])), z = ~get(paste0("Axis.",AXIS[3])), 
-                      color = ~get(COLOR), colors = PALETTE, mode = "markers") %>% 
+FINALPLOT<-(plot_ly(data = PLOT, type = "scatter3d", x = ~get(paste0("Axis.",AXIS[1])), y = ~get(paste0("Axis.",AXIS[2])), z = ~get(paste0("Axis.",AXIS[3])),
+                      color = ~get(COLOR), colors = PALETTE, mode = "markers") %>%
                       layout(scene = list(
-                        xaxis = list(title = paste0("PCo", AXIS[1],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[1]],1), "%")), 
-                        yaxis = list(title = paste0("PCo", AXIS[2],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[2]],1), "%")), 
+                        xaxis = list(title = paste0("PCo", AXIS[1],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[1]],1), "%")),
+                        yaxis = list(title = paste0("PCo", AXIS[2],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[2]],1), "%")),
                         zaxis = list(title = paste0("PCo", AXIS[3],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[3]],1), "%"))
                       )))
 }else if(missing(COLOR) & !missing(SHAPE)){
-    FINALPLOT<-(plot_ly(data = PLOT, type = "scatter3d", x = ~get(paste0("Axis.",AXIS[1])), y = ~get(paste0("Axis.",AXIS[2])), z = ~get(paste0("Axis.",AXIS[3])), 
-                  symbol=~get(SHAPE), symbols=seq(15,20,1), mode = "markers") %>% 
+    FINALPLOT<-(plot_ly(data = PLOT, type = "scatter3d", x = ~get(paste0("Axis.",AXIS[1])), y = ~get(paste0("Axis.",AXIS[2])), z = ~get(paste0("Axis.",AXIS[3])),
+                  symbol=~get(SHAPE), symbols=seq(15,20,1), mode = "markers") %>%
                   layout(scene = list(
-                    xaxis = list(title = paste0("PCo", AXIS[1],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[1]],1), "%")), 
-                    yaxis = list(title = paste0("PCo", AXIS[2],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[2]],1), "%")), 
+                    xaxis = list(title = paste0("PCo", AXIS[1],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[1]],1), "%")),
+                    yaxis = list(title = paste0("PCo", AXIS[2],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[2]],1), "%")),
                     zaxis = list(title = paste0("PCo", AXIS[3],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[3]],1), "%"))
-                  )))   
+                  )))
 } else if(!missing(COLOR) & !missing(SHAPE)){
-  FINALPLOT<-(plot_ly(data = PLOT, type = "scatter3d", x = ~get(paste0("Axis.",AXIS[1])), y = ~get(paste0("Axis.",AXIS[2])), z = ~get(paste0("Axis.",AXIS[3])), 
-                      color = ~get(COLOR), colors = PALETTE, symbol=~get(SHAPE), symbols=seq(15,20,1), mode = "markers") %>% 
+  FINALPLOT<-(plot_ly(data = PLOT, type = "scatter3d", x = ~get(paste0("Axis.",AXIS[1])), y = ~get(paste0("Axis.",AXIS[2])), z = ~get(paste0("Axis.",AXIS[3])),
+                      color = ~get(COLOR), colors = PALETTE, symbol=~get(SHAPE), symbols=seq(15,20,1), mode = "markers") %>%
                 layout(scene = list(
-                  xaxis = list(title = paste0("PCo", AXIS[1],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[1]],1), "%")), 
-                  yaxis = list(title = paste0("PCo", AXIS[2],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[2]],1), "%")), 
+                  xaxis = list(title = paste0("PCo", AXIS[1],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[1]],1), "%")),
+                  yaxis = list(title = paste0("PCo", AXIS[2],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[2]],1), "%")),
                   zaxis = list(title = paste0("PCo", AXIS[3],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[3]],1), "%"))
-                )))   
+                )))
   }
 
 return(FINALPLOT)

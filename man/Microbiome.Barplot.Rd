@@ -2,7 +2,7 @@
 % Please edit documentation in R/Microbiome.Barplot.R
 \name{Microbiome.Barplot}
 \alias{Microbiome.Barplot}
-\title{\code{Microbiome.Barplot.R} Create a stacked barplot showing composition of samples,}
+\title{\code{Microbiome.Barplot.R} Create a stacked barplot showing composition of samples.}
 \usage{
 Microbiome.Barplot(OTUTABLE, METADATA, NTOPLOT, CATEGORY)
 }
@@ -11,14 +11,13 @@ Microbiome.Barplot(OTUTABLE, METADATA, NTOPLOT, CATEGORY)
 
 \item{METADATA}{A Table of metadata where sample names are row names.}
 
-\item{NTOPLOT}{A number of features to plot}
+\item{NTOPLOT}{A number of features to plot.}
 
-\item{CATEGORY}{A Metadata category to block samples by}
+\item{CATEGORY}{A Metadata category to block samples by (faceting via ggplot2)}
 }
 \value{
-Subsampled Table
+Barplot
 }
 \description{
-Uses ggplot2 to create a stacked barplot, for example on phylum level abundances. The most abundant features (defaults to 10, based on rowMeans) will be plotted unless user specified. Anything of over 10 features will use default coloring which will be very difficult to interpret.
+Uses ggplot2 to create a stacked barplot, for example on phylum level abundances. The most abundant features (defaults to 10, based on rowMeans) will be plotted unless user specified. Anything of over 10 features will use default coloring which may be very difficult to interpret.
 }
-
