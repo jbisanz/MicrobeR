@@ -16,7 +16,7 @@ Make.Tree<-function(FEATURENAMES,FEATURESEQS, MUSCLE, MAKEPHY, PRINTTREE){
   if(missing(MAKEPHY)){MAKEPHY="/macqiime/anaconda/bin/make_phylogeny.py"}
   if(missing(PRINTTREE)){PRINTTREE="yes"}
 
-  write.fasta(as.list(FEATURENAMES), FEATURENAMES, "Feature_Seqs.fasta")
+  write.fasta(as.list(FEATURESEQS), FEATURENAMES, "Feature_Seqs.fasta")
 
   system(paste(MUSCLE,"-in Feature_Seqs.fasta -out Feature_Seqs.mfa"))
   system(paste("source /macqiime/configs/bash_profile.txt;",MAKEPHY,"--tree_method fasttree --root_method=midpoint -i Feature_Seqs.mfa -o Feature_Seqs.tree"))
