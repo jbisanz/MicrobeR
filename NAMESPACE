@@ -55,4 +55,5 @@ export(Make.Tree)
 export(Nice.Table)
 export(Microbiome.Barplot)
 
-.onLoad(packageStartupMessage("This is MicrobeR 0.2.0. See https://jbisanz.github.io/MicrobeR/ for usage information."))
+
+
