@@ -11,6 +11,8 @@
 
 Make.CLR<-function(TABLE, PRIOR, CZM){
 
+  if(nrow(TABLE)<100){message("WARNING: CLR being applied with relatively few features.")}
+  
   if(missing(CZM)){CZM=FALSE}
   if(missing(PRIOR)){PRIOR=0.5}
   

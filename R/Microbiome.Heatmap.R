@@ -19,7 +19,7 @@ if(missing(ROWCLUSTER)){ROWCLUSTER="UPGMA"}
    
 if(ROWCLUSTER=="UPGMA"){
   print("Row clustering with UPGMA clustering.")
-  roworder<-hclust(dist(Make.CLR(OTUTABLE)), method="average")
+  suppressMessages(roworder<-hclust(dist(Make.CLR(OTUTABLE)), method="average"))
   roworder<-roworder$labels[roworder$order]
 } else if(ROWCLUSTER=="abundance"){
    print("Rows ranked on average abundance high to low.")
