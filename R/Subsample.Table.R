@@ -1,5 +1,5 @@
 #' \code{Subsample.Table} Rarify/Subsample a Feature
-#' @description Takes a Feature/OTU/SV table where samples are columns and feature names are row names. This was formerly using the VEGAN rrarefy function but was found to be slow on large numbers of samples (~3000). It is coded using a loop while the implementation in phyloseq is vectorized it would appear. Now this function is really just an alias for rarefy_even_depth from phyloseq. NOTE: Sampling with replacement!
+#' @description Takes a Feature/OTU/SV table where samples are columns and feature names are row names. This was formerly using the VEGAN rrarefy function but was found to be slow on large numbers of samples (~3000). Suspected this was due to serial/vectorized implimentations. Now this function is really just an alias for rarefy_even_depth from phyloseq. NOTE: Sampling with replacement!
 #'
 #' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
 #' @param DEPTH Count depth, defaults to min(colSums(OTUTABLE)) if not passed

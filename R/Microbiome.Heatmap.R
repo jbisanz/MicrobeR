@@ -1,34 +1,32 @@
 #' \code{Microbiome.Heatmap.R} Plot heat map of microbiome data
 #'
-#' @description Creates a heat map based based on user provided table. Transforms to log2(percent), log10(percent), or CLR as requested. For plotting purposes, a prior of 0.01% is added to the log percent abundances. Row clustering of ggplot2 output is by upgma of euclidean dist. If no metadata passed, column clustering will be applied in the heatmap.2 output.
+#' @description Creates a heat map based based on user provided table. Transforms to log2(percent), log10(percent), or CLR as requested. For plotting purposes, a prior of 0.01% is added to the log percent abundances.
 #'
 #' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names.
 #' @param METADATA Metadata file to be used for blocking.
 #' @param TRANSFORM Method to transform data with for plotting, valid options are log2, log10, clr, percent, zscore or none (defaults to log10). None would be ideal if for example a list of fold changes was supplied. Zscore is calculated on clr.
 #' @param NTOPFEATURES The N most abundance features to plot (defaults to all). Calculated by taking largest row sums of percentage data
-#' @param CATEGORY (optional) Category to create separate blocks (optional, defaults to order of samples in otutable)
-#' @param ORDER (optional) An order of levels in Category to use, (optional, defaults to order of unique(Category)). Only works with heatmap.2 method.
-#' @param USERORDER (optional) A vector with user specified sample order for plot with NA for separators, overides metadata, category and order. Only works with heatmap.2 method.
-#' @param PLOTMETHOD (optional) Can be plotted using ggplot2 or heatmap.2 (default: ggplot2).
-#' @return Prints a heat map
+#' @param CATEGORY (optional) Category to create separate blocks (default: order of samples in otutable)
+#' @param ROWCLUSTER (optional) How to order rows. Valid options are: UPGMA or abundance, default is UPGMA which is UPGMA clustering of euclidean distance of CLR-normalized counts
+#' @return Prints a ggplot2 heatmap
 #' @export
 
-Microbiome.Heatmap<-function(OTUTABLE,METADATA, NTOPFEATURES, TRANSFORM, CATEGORY,ORDER,USERORDER, PLOTMETHOD){
+Microbiome.Heatmap<-function(OTUTABLE,METADATA, NTOPFEATURES, TRANSFORM, CATEGORY, ROWCLUSTER){
 
 if(missing(TRANSFORM)){TRANSFORM="log10"; print("No transform specified, using log10")}
-if(missing(PLOTMETHOD)){PLOTMETHOD="ggplot2"; print("No plotting method specified, using ggplot2")}
 if(missing(METADATA)){ print("No metadata given, using heatmap.2 row+column clustering")}
+if(missing(ROWCLUSTER)){ROWCLUSTER="UPGMA"} 
+   
+if(ROWCLUSTER=="UPGMA"){
+  print("Row clustering with UPGMA clustering.")
+  roworder<-hclust(dist(Make.CLR(OTUTABLE)), method="average")
+  roworder<-roworder$labels[roworder$order]
+} else if(ROWCLUSTER=="abundance"){
+   print("Rows ranked on average abundance high to low.")
+   roworder<-rowMeans(Make.Percent(OTUTABLE))
+   roworder<-names(roworder[order(roworder, decreasing=TRUE)])
+   }
 
-if(missing(METADATA)){
-  DEND="both"
-  COLCLUST=TRUE
-} else {
-  DEND="row"
-  COLCLUST=FALSE
-  }
-
-if(!missing(CATEGORY)){METADATA[[CATEGORY]]<-factor(METADATA[[CATEGORY]])}
-  tmp<-OTUTABLE
 
   if(TRANSFORM=="log10"){
     OTUTABLE<-log10(Make.Percent(OTUTABLE)+0.01)
@@ -39,7 +37,7 @@ if(!missing(CATEGORY)){METADATA[[CATEGORY]]<-factor(METADATA[[CATEGORY]])}
   } else if(TRANSFORM=="percent"){
     OTUTABLE<-Make.Percent(OTUTABLE)
   } else if(TRANSFORM=="none"){
-    print("No transformation applied to data")
+    stop("No transformation applied, this is currently causing a bug, will be corrected in future.")
   } else if(TRANSFORM=="zscore"){
     OTUTABLE<-t(apply(Make.CLR(OTUTABLE), 1, function(x){(x-mean(x))/sd(x)}))
   }
@@ -48,56 +46,15 @@ if(!missing(CATEGORY)){METADATA[[CATEGORY]]<-factor(METADATA[[CATEGORY]])}
   print(paste("Maximum abundance:", max(OTUTABLE)))
 
   if(!missing(NTOPFEATURES)){
-    tmp<-cbind(rowSums(Make.Percent(tmp)), tmp)
-    OTUTABLE<-OTUTABLE[rownames(tmp[order(tmp[,1], decreasing = T),])[1:NTOPFEATURES],]
-    remove(tmp)
+    OTUTABLE<-OTUTABLE[order(rowMeans(OTUTABLE), decreasing=TRUE)[1:NTOPFEATURES],]
   }
 
-roworder<-hclust(dist(OTUTABLE), method="average")
-roworder<-roworder$labels[roworder$order]
-
-if (!missing(USERORDER)){
-    OTUTABLE<-OTUTABLE[,USERORDER]
-  } else if(!missing(CATEGORY) && !missing(ORDER)){
-    METADATA<-METADATA[which(METADATA[,CATEGORY] %in% ORDER),]
-    NEWTABLE<-rep(NA, nrow(OTUTABLE))
-    for (level in unique(ORDER)){
-      NEWTABLE<-cbind(NEWTABLE, OTUTABLE[,rownames(METADATA[METADATA[[CATEGORY]]==level,])], rep(NA, nrow(OTUTABLE)), rep(NA, nrow(OTUTABLE)), rep(NA, nrow(OTUTABLE)))
-    }
-    OTUTABLE<-NEWTABLE
-  } else if (!missing(CATEGORY)) {
-    NEWTABLE<-rep(NA, nrow(OTUTABLE))
-    for (level in levels(METADATA[,CATEGORY])){
-      NEWTABLE<-cbind(NEWTABLE, OTUTABLE[,rownames(METADATA[METADATA[[CATEGORY]]==level,])], rep(NA, nrow(OTUTABLE)), rep(NA, nrow(OTUTABLE)), rep(NA, nrow(OTUTABLE)))
-    }
-    OTUTABLE<-NEWTABLE
-  }
-
-
-if(PLOTMETHOD=="heatmap.2"){
-HTMP2<-heatmap.2(as.matrix(OTUTABLE),
-            dendrogram=DEND,
-            Rowv=TRUE,
-            Colv=COLCLUST,
-            revC=FALSE,
-            trace="none",
-            key.xlab=paste0(TRANSFORM, " relative abundance"),
-            keysize="1",
-            density.info="none",
-            sepwidth=c(0.05,0.05),
-            col=colorRampPalette(c("black","blue", "cyan","green","yellow","red"))(100),
-            margins=c(12,20),
-            symbreaks=FALSE,
-            symkey=FALSE
-  )}
-
-
-
-m.OTUTABLE<-melt(OTUTABLE, na.rm = T)
+m.OTUTABLE<-reshape2::melt(OTUTABLE)
 colnames(m.OTUTABLE)<-c("Taxa","Sample","Abundance")
 m.OTUTABLE<-merge(m.OTUTABLE, METADATA, by.x="Sample", by.y="row.names")
-if(PLOTMETHOD=="ggplot2"){
-P<-(ggplot(m.OTUTABLE, aes(x=Sample,y=factor(Taxa, levels=rev(roworder)), fill=Abundance, include.lowest = T))
+
+m.OTUTABLE$Taxa<-factor(m.OTUTABLE$Taxa, levels=rev(roworder))
+P<-(ggplot(m.OTUTABLE, aes(x=Sample,y=Taxa, fill=Abundance))
     + geom_tile()
     + theme_bw()
     + theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 6), axis.text.y = element_text(size=6))
@@ -107,11 +64,8 @@ P<-(ggplot(m.OTUTABLE, aes(x=Sample,y=factor(Taxa, levels=rev(roworder)), fill=A
 
   if(!missing(CATEGORY)){
     P<-P + facet_grid(~get(CATEGORY), margins=FALSE, drop=TRUE, scales = "free", space = "free")
-    }
+  }
 
-}
-
-if(PLOTMETHOD=="ggplot2"){ return(P)}
-else if (PLOTMETHOD=="heatmap.2") {return(HTMP2)}
+return(P)
 
 }

@@ -1,6 +1,6 @@
 #' \code{PCoA3D} Generate Distance/Dissimilarities and plot PCoA in interactive 3D plot
 #'
-#' @description  UniFrac is implimented as per GUniFrac, Bray Curtis from Vegan, Jensen-Shannon divergence from textmineR, and PCoA from APE. Plotting via plotly's 3d plotting.
+#' @description  UniFrac is implimented as per Phyloseq, Bray Curtis from Vegan, Jensen-Shannon divergence from textmineR, and PCoA from APE. Plotting via plotly's 3d plotting.
 #'
 #' @param METRIC Desired beta-diversity metric, options are Bray Curtis (braycurtis), Weighted UniFrac (weightedunifrac), UnWeighted UniFrac (unweightedunifrac), Jensen-Shannon diversgence (jsd).
 #' @param METADATA Metadata table with variables to color or shape points by where sample is row name.
@@ -9,9 +9,8 @@
 #' @param COLOR Metadata column to color samples by. Defaults to none.
 #' @param SHAPE Metadata column to shape samples by. Defaults to none.
 #' @param SUBSAMPLE Should table be subsampled? TRUE/FALSE (default: TRUE)
-#' @param AXIS Which Axes should be plotted? Expects a numeric vector of length 3. defaults to  AXIS=c(1,2,3)
+#' @param AXIS Which PCs should be plotted? Expects a numeric vector of length 3. defaults to  AXIS=c(1,2,3)
 #' @param PALETTE a vector of COLORS to be used? defaults to the rainbow palette.
-
 #'
 #' @usage PCoA(METRIC="braycurtis", METADATA=experiment_metadata, OTUTABLE=otutable, TREE=ggtree, COLOR="Time", SHAPE="Group", SUBSAMPLE=TRUE, AXIS=c(1,2,3), PALETTE=c("red","green"))
 #' @return Returns plot.

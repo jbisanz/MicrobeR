@@ -1,17 +1,22 @@
 #' \code{Read.Filter} Remove samples with less than a user specified number of reads.
 #'
-#' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
+#' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names.
 #' @param METADATA Metadata file where samples are row names.
 #' @param READCUTOFF Minimum number of reads to pass filter
 #' @param VERBOSE Should lists of which samples were removed or kept be printed to screen? (defaults to TRUE)
-#' @param PLOT Should a plot be made? (defaults to TRUE)
-#' @return A list containing new table of features[[1]] (Ex. OTU table) and Metadata[[2]].
+#' @param PLOT Should a plot of read depth be made? (defaults to TRUE)
+#' @usage filter<-Read.Filter(svtable, metadata, 5000)
+#' newtable<-filter$Features
+#' newmetadata<-filter$Metadata
+#' @return A named list containing new feature table and metadata.
 #' @export
 
 Read.Filter<-function(OTUTABLE,METADATA,READCUTOFF, VERBOSE, PLOT){
   if(missing(VERBOSE)){VERBOSE=T}
   if(missing(PLOT)){PLOT=T}
 
+  if(sum(!colnames(OTUTABLE) %in% rownames(metadata))>0){stop("There are samples in feature table with no corresponding metadata!")}
+  
   if(VERBOSE==T){
     message("Removed the following ", sum(colSums(OTUTABLE)<READCUTOFF), " samples with less than ", READCUTOFF, " reads:")
     print(colnames(OTUTABLE[,colSums(OTUTABLE)<READCUTOFF]))
@@ -36,8 +41,10 @@ Read.Filter<-function(OTUTABLE,METADATA,READCUTOFF, VERBOSE, PLOT){
                 axis.title.x=element_text(size=7),
                 axis.title.y=element_text(size=7),
                 plot.title=element_text(size=8))
+        + xlab("Number of Reads")
+        + ylab("Number of Samples")
         + theme_bw()
       )}
 
-  return(list(OTUTABLE, METADATA))
+  return(list(Features=OTUTABLE, Metadata=METADATA))
 }

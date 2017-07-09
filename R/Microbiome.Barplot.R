@@ -5,6 +5,7 @@
 #' @param NTOPLOT A number of features to plot.
 #' @param CATEGORY A Metadata category to block samples by (faceting via ggplot2)
 #' @return Barplot
+#' @usage Microbiome.Barplot(table,metadata,10, "group")
 #' @export
 
 Microbiome.Barplot<-function(OTUTABLE,METADATA, NTOPLOT, CATEGORY){
@@ -14,21 +15,27 @@ Microbiome.Barplot<-function(OTUTABLE,METADATA, NTOPLOT, CATEGORY){
 
  OTUTABLE<-Make.Percent(OTUTABLE)
  OTUTABLE<-OTUTABLE[order(rowMeans(OTUTABLE), decreasing = T),]
- Remainder<-colSums(OTUTABLE[(NTOPLOT+1):nrow(OTUTABLE),])
- OTUTABLE<-rbind(OTUTABLE[1:NTOPLOT,], Remainder)
-
- forplot<-reshape2::melt(OTUTABLE)
-
- if(!missing(METADATA) & !missing(CATEGORY)){
-  forplot<-merge(forplot, METADATA, by.x="Var2", by.y="row.names")
+ if(NTOPLOT<nrow(OTUTABLE)){ #if left over, is added to remainder
+    Remainder<-colSums(OTUTABLE[(NTOPLOT+1):nrow(OTUTABLE),])
+    OTUTABLE<-rbind(OTUTABLE[1:NTOPLOT,], Remainder)
  }
 
- PLOT<-(ggplot(forplot, aes(x=Var2, y=value, fill=factor(Var1, levels = rev(levels(Var1)))))
+ forplot<-reshape2::melt(OTUTABLE)
+ colnames(forplot)<-c("Taxa","SampleID","Abundance")
+ forplot$Taxa<-factor(forplot$Taxa,levels=rev(levels(forplot$Taxa)))
+ if(!missing(METADATA) & !missing(CATEGORY)){
+  forplot<-merge(forplot, METADATA, by.x="SampleID", by.y="row.names")
+ }
+
+ 
+ 
+ PLOT<-(ggplot(forplot, aes(x=SampleID, y=Abundance, fill=Taxa))
         + geom_bar(stat="identity")
         + theme_classic()
         + ylab("% Abundance")
         + xlab("SampleID")
         + theme(axis.text.x =element_text(angle=45, hjust=1, size=6))
+        + theme(legend.text = element_text(size=6))
         )
 
 

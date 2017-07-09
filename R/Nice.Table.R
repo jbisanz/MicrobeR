@@ -11,6 +11,6 @@
 
 Nice.Table<-function(TABLE, NROW){
 if(missing(NROW))(NROW=10)
-DTABLE<-DT::datatable(TABLE, extensions='Buttons', options=list(pageLength=NROW, dom='Bfrtip', buttons=c('copy','csv','excel', 'pdf') ))
+DTABLE<-DT::datatable(TABLE, extensions='Buttons', filter="top", options=list(pageLength=NROW, dom='Bfrtip', buttons=c('copy','csv','excel', 'pdf') ))
 return(DTABLE)
 }

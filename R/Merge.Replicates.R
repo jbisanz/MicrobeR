@@ -3,9 +3,10 @@
 #' @description Collapses a table via aggregate FUN=sum based on a provided column in the datatable.
 #'
 #' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
-#' @param METADATA A fraction to use to filter
-#' @param CATEGORY Minimum number of reads to pass filter as a string, ex. "RepID"
-#' @return A list of [[1]] new Feature/OTU/SV table and [[2]] collapsed metadata file
+#' @param METADATA Table of metadata with sample name as row name
+#' @param CATEGORY A category used to dereplicate sequences , ex. "RepID"
+#' @return A named list of [[1]] new Feature/OTU/SV table and [[2]] collapsed metadata file
+#' @usage x<-Merge.Replicates(svtable, metadata, "UniqueId") \n newtable<-x$Features newmeta<-x$Metadata
 #' @export
 
 Merge.Replicates<-function(OTUTABLE, METADATA, CATEGORY){
@@ -20,5 +21,5 @@ rownames(METADATA)<-NULL
 METADATA<-METADATA[!duplicated(METADATA[,CATEGORY]),]
 rownames(METADATA)<-METADATA[,CATEGORY]
 OTUTABLE<-t(OTUTABLE)
-return(list(OTUTABLE,METADATA))
+return(list(Features=OTUTABLE,Metadata=METADATA))
 }

@@ -13,11 +13,11 @@
 #' @param ADONIS Should ADONIS test be applied ? TRUE/FALSE (default TRUE)
 
 #'
-#' @usage PCoA(METRIC="braycurtis", METADATA=experiment_metadata, OTUTABLE=otutable, TREE=ggtree, COLOR="Time", SHAPE="Group", SUBSAMPLE=TRUE, AXIS=c(1,2),)
+#' @usage PCoA(METRIC="braycurtis", METADATA=experiment_metadata, OTUTABLE=otutable, TREE=ggtree, COLOR="Time", SHAPE="Group", SUBSAMPLE=TRUE, AXIS=c(1,2))
 #' @return Returns a ggplot
 #' @export
 
-PCoA<-function(METRIC,METADATA,OTUTABLE, TREE, COLOR, SHAPE, CONDS, SUBSAMPLE, AXIS, ADONIS){
+PCoA<-function(METRIC,METADATA,OTUTABLE, TREE, COLOR, SHAPE, SUBSAMPLE, AXIS, ADONIS){
 
   if(missing(METRIC)){METRIC="braycurtis"}
 
@@ -36,21 +36,26 @@ PCoA<-function(METRIC,METADATA,OTUTABLE, TREE, COLOR, SHAPE, CONDS, SUBSAMPLE, A
 
 if(missing(AXIS)){AXIS=c(1,2)}
 
+  
+if(sum(!colnames(OTUTABLE) %in% rownames(METADATA))>0){stop("Metadata not available for all samples. Check metadata and feature table match.")}
+  
   if(METRIC=="unweightedunifrac"){
     print("Doing Unweighted UniFrac...")
-    DISTMATRIX <- UniFrac(phyloseq(sub.OTUlevel, filtered.TREE), weighted=F)
+    DISTMATRIX <- as.matrix(UniFrac(phyloseq(sub.OTUlevel, filtered.TREE), weighted=F))
     METRIC="Unweighted UniFrac"
   } else if(METRIC=="weightedunifrac") {
     print("Doing Weighted UniFrac...")
-    DISTMATRIX <- UniFrac(phyloseq(sub.OTUlevel, filtered.TREE), weighted=T)
+    DISTMATRIX <- as.matrix(UniFrac(phyloseq(sub.OTUlevel, filtered.TREE), weighted=T))
     METRIC="Weighted UniFrac"
   } else if(METRIC=="braycurtis"){
     print("Doing Bray Curtis...")
     DISTMATRIX<-as.matrix(vegan::vegdist(t(sub.OTUlevel), method="bray", binary=FALSE, diag=FALSE, upper=FALSE))
     METRIC="Bray Curtis"
   } else if(METRIC=="jsd"){
-    DISTMATRIX<-textmineR::CalcJSDivergence(sub.OTUlevel, by_rows=FALSE)
+    DISTMATRIX<-as.matrix(phyloseq::JSD(phyloseq(sub.OTUlevel)))
     METRIC="Jensen-Shannon Divergence"
+  } else {
+    stop("Metric choice not given")
   }
 
   PCO<-ape::pcoa(DISTMATRIX)
@@ -58,25 +63,27 @@ if(missing(AXIS)){AXIS=c(1,2)}
   PLOT<-merge(as.data.frame(PCO$vectors), METADATA[rownames(PCO$vectors),], by="row.names", all=T )
 
 
-  if(missing(COLOR)){COLORS=rownames(METADATA)} else if (ADONIS==TRUE){
-    ADONIS<-vegan::adonis(DISTMATRIX ~ METADATA[rownames(DISTMATRIX),COLOR], permutations=999)
-    print(paste0(COLOR, "-> ADONIS P=", ADONIS$aov.tab$`Pr(>F)`[1], " R2=", signif(ADONIS$aov.tab$R2[1],3)))
-    COLORS<-PLOT[[COLOR]]
-  } else {
-    COLORS<-PLOT[[COLOR]]
-    }
-
-
-
-  if(missing(SHAPE)){SHAPES=rep("Sample", nrow(METADATA))} else if (ADONIS==TRUE){
-    ADONIS<-vegan::adonis(DISTMATRIX ~ METADATA[rownames(DISTMATRIX),SHAPE], permutations=999)
-    print(paste0(SHAPE, "-> ADONIS P=", ADONIS$aov.tab$`Pr(>F)`[1], " R2=", signif(ADONIS$aov.tab$R2[1],3)))
-    SHAPES<-PLOT[[SHAPE]]
-  } else {
-    SHAPES<-PLOT[[SHAPE]]
+ if (ADONIS==TRUE & !missing(COLOR)){
+    if(sum(is.na(METADATA[,COLOR]))>0){stop(paste0("ADONIS could not be calculated with NA variable in: ", COLOR))}
+    print(paste("Calculating ADONIS for", COLOR))
+    RESULT<-vegan::adonis(DISTMATRIX ~ METADATA[rownames(DISTMATRIX),COLOR], permutations=999)
+    print(paste0(COLOR, "-> ADONIS P=", RESULT$aov.tab$`Pr(>F)`[1], " R2=", signif(RESULT$aov.tab$R2[1],3)))
   }
 
-    FINALPLOT<-(ggplot(PLOT, aes(x=get(paste0("Axis.",AXIS[1])), y=get(paste0("Axis.",AXIS[2]))))
+
+if (ADONIS==TRUE & !missing(SHAPE)){
+    if(sum(is.na(METADATA[,SHAPE]))>0){stop(paste0("ADONIS could not be calculated with NA variable in: ", SHAPE))}
+    print(paste("Calculating ADONIS for", SHAPE))
+    RESULT<-vegan::adonis(DISTMATRIX ~ METADATA[rownames(DISTMATRIX),SHAPE], permutations=999)
+    print(paste0(SHAPE, "-> ADONIS P=", RESULT$aov.tab$`Pr(>F)`[1], " R2=", signif(RESULT$aov.tab$R2[1],3)))
+  }
+
+  
+    PLOT$SampleID=PLOT$Row.names
+    PLOT$X<-PLOT[,paste0("Axis.",AXIS[1])]
+    PLOT$Y<-PLOT[,paste0("Axis.",AXIS[2])]
+    
+    FINALPLOT<-(ggplot(PLOT, aes(label=SampleID, x=X, y=Y))
           + theme_bw()
           + theme(plot.title=element_text(size=10), axis.text=element_text(size=8), aspect.ratio = 1, axis.title=element_text(size=8,face="bold"))
           + ggtitle(METRIC)
@@ -84,10 +91,10 @@ if(missing(AXIS)){AXIS=c(1,2)}
           + ylab(paste0("PCo", AXIS[2],": ", round((100*PCO$values$Eigenvalues/sum(PCO$values$Eigenvalues))[AXIS[2]],1), "% Variation Explained"))
           )
 
-    if(missing(COLOR) & missing(SHAPE)){FINALPLOT<-FINALPLOT +geom_point(aes(alpha=0.5))+theme(legend.position="none")}
-    else if (!missing(SHAPE) & !missing(COLOR)){FINALPLOT<-FINALPLOT+ geom_point(aes(shape=SHAPES, color=COLORS), alpha=0.5) + labs(color=COLOR, shape=SHAPE)}
-    else if (!missing(SHAPE)){FINALPLOT<-FINALPLOT+ geom_point(aes(shape=SHAPES), alpha=0.5) + labs(shape=SHAPE)}
-    else if (!missing(COLOR)){FINALPLOT<-FINALPLOT+ geom_point(aes(color=COLORS), alpha=0.5) + labs(color=COLOR)}
+    if(missing(COLOR) & missing(SHAPE)){FINALPLOT<-FINALPLOT +geom_point(alpha=0.5)+theme(legend.position="none")}
+    else if (!missing(SHAPE) & !missing(COLOR)){FINALPLOT<-FINALPLOT+ geom_point(aes(shape=get(SHAPE), color=get(COLOR)), alpha=0.5) + labs(color=paste0(COLOR), shape=paste0(SHAPE)) }
+    else if (!missing(SHAPE)){FINALPLOT<-FINALPLOT+ geom_point(aes(shape=get(SHAPE)), alpha=0.5) + labs(shape=paste0(SHAPE))}
+    else if (!missing(COLOR)){FINALPLOT<-FINALPLOT+ geom_point(aes(color=get(COLOR)), alpha=0.5) + labs(color=paste0(COLOR))}
 
 return(FINALPLOT)
 }

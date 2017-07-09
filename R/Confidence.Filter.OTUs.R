@@ -4,7 +4,7 @@
 #'
 #' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and feature IDs are row names
 #' @param MINSAMPS A minimum number of samples for the feature/OTU/SV to be observed in
-#' @param MINREADS A minimum number of reads for a feature/OTUs/SV to be kept
+#' @param MINREADS A minimum number of reads for a feature/OTUs/SV to be kept across all samples
 #' @return filtered.OTUTABLE
 #' @export
 
