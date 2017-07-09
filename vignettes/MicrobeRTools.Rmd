@@ -86,7 +86,7 @@ Lets explore global trends in our data with a PCoA using Bray Curtis. Note that 
 ggplotly(PCoA(METRIC="braycurtis", OTUTABLE = table, METADATA = metadata, COLOR = "Timepoint") + ggtitle("Exploratory PCoA"))
 ```
 
-We can also make a 3D version of this.
+We can also make a 3D version of this. If this, or the figure above do not show, enable webgl in your browser.
 
 ```{r}
 PCoA3D(METRIC="braycurtis", OTUTABLE = table, METADATA = metadata, COLOR="Timepoint")
