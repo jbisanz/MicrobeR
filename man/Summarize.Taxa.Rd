@@ -4,7 +4,7 @@
 \alias{Summarize.Taxa}
 \title{\code{Summarize.Taxa} Make taxa summary tables similar to QIIME summarize_taxa.py}
 \usage{
-Summarize.Taxa(OTUTABLE, TAXONOMY)
+SummarizedTaxa<-Summarize.Taxa(SVtable, TaxTable)
 }
 \arguments{
 \item{OTUTABLE}{Table of feature/OTU/SV COUNTS where Samples are columns, and IDs are row names}
@@ -12,10 +12,10 @@ Summarize.Taxa(OTUTABLE, TAXONOMY)
 \item{TAXONOMY}{Table of taxonomies to aggregate on as identified above wherein the column names correspond to the taxonomic level}
 }
 \value{
-List of data frames of each level. Access by TABLE[[i]] where i is taxonomic level above.
+A Named List of data frames of each level. Access by like TABLE$Genus or TABLE[[i]] where i is taxonomic level above.
 }
 \description{
-Summarizes through the first 7 levels of taxonomy of OTUs/SVs where in the levels are labeled as:
+Summarizes through the first 7 levels of taxonomy of OTUs/SVs wherein the levels are labeled as:
 1-Kingdom
 2-Phylum
 3-Class
@@ -23,4 +23,5 @@ Summarizes through the first 7 levels of taxonomy of OTUs/SVs where in the level
 5-Family
 6-Genus
 7-Species
+8- Features with full taxonomy strings
 }

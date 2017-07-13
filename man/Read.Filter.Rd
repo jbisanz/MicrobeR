@@ -4,10 +4,12 @@
 \alias{Read.Filter}
 \title{\code{Read.Filter} Remove samples with less than a user specified number of reads.}
 \usage{
-Read.Filter(OTUTABLE, METADATA, READCUTOFF, VERBOSE, PLOT)
+filter<-Read.Filter(svtable, metadata, 5000)
+newtable<-filter$Features
+newmetadata<-filter$Metadata
 }
 \arguments{
-\item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
+\item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names.}
 
 \item{METADATA}{Metadata file where samples are row names.}
 
@@ -15,10 +17,10 @@ Read.Filter(OTUTABLE, METADATA, READCUTOFF, VERBOSE, PLOT)
 
 \item{VERBOSE}{Should lists of which samples were removed or kept be printed to screen? (defaults to TRUE)}
 
-\item{PLOT}{Should a plot be made? (defaults to TRUE)}
+\item{PLOT}{Should a plot of read depth be made? (defaults to TRUE)}
 }
 \value{
-A list containing new table of features[[1]] (Ex. OTU table) and Metadata[[2]].
+A named list containing new feature table and metadata.
 }
 \description{
 \code{Read.Filter} Remove samples with less than a user specified number of reads.

@@ -4,17 +4,19 @@
 \alias{Merge.Replicates}
 \title{\code{Merge.Replicates} Sum counts together for replicates (ex. pcr/extraction/sequencing run)}
 \usage{
-Merge.Replicates(OTUTABLE, METADATA, CATEGORY)
+x<-Merge.Replicates(svtable, metadata, "UniqueId")
+newtable<-x$Features
+newmeta<-x$Metadata
 }
 \arguments{
 \item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
 
-\item{METADATA}{A fraction to use to filter}
+\item{METADATA}{Table of metadata with sample name as row name}
 
-\item{CATEGORY}{Minimum number of reads to pass filter as a string, ex. "RepID"}
+\item{CATEGORY}{A category used to dereplicate sequences , ex. "RepID"}
 }
 \value{
-A list of [[1]] new Feature/OTU/SV table and [[2]] collapsed metadata file
+A named list of [[1]] new Feature/OTU/SV table and [[2]] collapsed metadata file
 }
 \description{
 Collapses a table via aggregate FUN=sum based on a provided column in the datatable.

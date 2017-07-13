@@ -2,7 +2,7 @@
 % Please edit documentation in R/Make.Tree.R
 \name{Make.Tree}
 \alias{Make.Tree}
-\title{\code{Make.Tree.R} Generate a phylogenetic tree to and plot}
+\title{\code{Make.Tree.R} Generate a phylogenetic tree and optional plot}
 \usage{
 Make.Tree(FEATURENAMES, FEATURESEQS, MUSCLE, MAKEPHY, PRINTTREE)
 }

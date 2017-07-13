@@ -11,7 +11,7 @@ Confidence.Filter.OTUs(OTUTABLE, MINSAMPS, MINREADS)
 
 \item{MINSAMPS}{A minimum number of samples for the feature/OTU/SV to be observed in}
 
-\item{MINREADS}{A minimum number of reads for a feature/OTUs/SV to be kept}
+\item{MINREADS}{A minimum number of reads for a feature/OTUs/SV to be kept across all samples}
 }
 \value{
 filtered.OTUTABLE

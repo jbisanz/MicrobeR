@@ -54,6 +54,3 @@ export(Microbiome.Heatmap)
 export(Make.Tree)
 export(Nice.Table)
 export(Microbiome.Barplot)
-
-
-

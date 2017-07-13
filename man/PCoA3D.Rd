@@ -21,7 +21,7 @@ PCoA(METRIC="braycurtis", METADATA=experiment_metadata, OTUTABLE=otutable, TREE=
 
 \item{SUBSAMPLE}{Should table be subsampled? TRUE/FALSE (default: TRUE)}
 
-\item{AXIS}{Which Axes should be plotted? Expects a numeric vector of length 3. defaults to  AXIS=c(1,2,3)}
+\item{AXIS}{Which PCs should be plotted? Expects a numeric vector of length 3. defaults to  AXIS=c(1,2,3)}
 
 \item{PALETTE}{a vector of COLORS to be used? defaults to the rainbow palette.}
 }
@@ -29,5 +29,5 @@ PCoA(METRIC="braycurtis", METADATA=experiment_metadata, OTUTABLE=otutable, TREE=
 Returns plot.
 }
 \description{
-UniFrac is implimented as per GUniFrac, Bray Curtis from Vegan, Jensen-Shannon divergence from textmineR, and PCoA from APE. Plotting via plotly's 3d plotting.
+UniFrac is implimented as per Phyloseq, Bray Curtis from Vegan, Jensen-Shannon divergence from textmineR, and PCoA from APE. Plotting via plotly's 3d plotting.
 }

@@ -6,7 +6,10 @@
 #' @param METADATA Table of metadata with sample name as row name
 #' @param CATEGORY A category used to dereplicate sequences , ex. "RepID"
 #' @return A named list of [[1]] new Feature/OTU/SV table and [[2]] collapsed metadata file
-#' @usage x<-Merge.Replicates(svtable, metadata, "UniqueId") \n newtable<-x$Features newmeta<-x$Metadata
+#' @usage x<-Merge.Replicates(svtable, metadata, "UniqueId")
+#' newtable<-x$Features
+#' newmeta<-x$Metadata
+#'
 #' @export
 
 Merge.Replicates<-function(OTUTABLE, METADATA, CATEGORY){

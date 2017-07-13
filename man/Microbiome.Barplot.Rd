@@ -4,7 +4,7 @@
 \alias{Microbiome.Barplot}
 \title{\code{Microbiome.Barplot.R} Create a stacked barplot showing composition of samples.}
 \usage{
-Microbiome.Barplot(OTUTABLE, METADATA, NTOPLOT, CATEGORY)
+Microbiome.Barplot(table,metadata,10, "group")
 }
 \arguments{
 \item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
