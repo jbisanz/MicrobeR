@@ -15,8 +15,8 @@ Read.Filter<-function(OTUTABLE,METADATA,READCUTOFF, VERBOSE, PLOT){
   if(missing(VERBOSE)){VERBOSE=T}
   if(missing(PLOT)){PLOT=T}
 
-  if(sum(!colnames(OTUTABLE) %in% rownames(metadata))>0){stop("There are samples in feature table with no corresponding metadata!")}
-  
+  if(sum(!colnames(OTUTABLE) %in% rownames(METADATA))>0){stop("There are samples in feature table with no corresponding metadata!")}
+
   if(VERBOSE==T){
     message("Removed the following ", sum(colSums(OTUTABLE)<READCUTOFF), " samples with less than ", READCUTOFF, " reads:")
     print(colnames(OTUTABLE[,colSums(OTUTABLE)<READCUTOFF]))
