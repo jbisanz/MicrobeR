@@ -36,9 +36,9 @@ PCoA<-function(METRIC,METADATA,OTUTABLE, TREE, COLOR, SHAPE, SUBSAMPLE, AXIS, AD
 
 if(missing(AXIS)){AXIS=c(1,2)}
 
-  
+
 if(sum(!colnames(OTUTABLE) %in% rownames(METADATA))>0){stop("Metadata not available for all samples. Check metadata and feature table match.")}
-  
+
   if(METRIC=="unweightedunifrac"){
     print("Doing Unweighted UniFrac...")
     DISTMATRIX <- as.matrix(UniFrac(phyloseq(sub.OTUlevel, filtered.TREE), weighted=F))
@@ -52,7 +52,8 @@ if(sum(!colnames(OTUTABLE) %in% rownames(METADATA))>0){stop("Metadata not availa
     DISTMATRIX<-as.matrix(vegan::vegdist(t(sub.OTUlevel), method="bray", binary=FALSE, diag=FALSE, upper=FALSE))
     METRIC="Bray Curtis"
   } else if(METRIC=="jsd"){
-    DISTMATRIX<-as.matrix(phyloseq::JSD(phyloseq(sub.OTUlevel)))
+    DISTMATRIX<-as.matrix(distance(otu_table(sub.OTUlevel, taxa_are_rows=T), method="jsd", type="samples"))
+
     METRIC="Jensen-Shannon Divergence"
   } else {
     stop("Metric choice not given")
@@ -78,11 +79,11 @@ if (ADONIS==TRUE & !missing(SHAPE)){
     print(paste0(SHAPE, "-> ADONIS P=", RESULT$aov.tab$`Pr(>F)`[1], " R2=", signif(RESULT$aov.tab$R2[1],3)))
   }
 
-  
+
     PLOT$SampleID=PLOT$Row.names
     PLOT$X<-PLOT[,paste0("Axis.",AXIS[1])]
     PLOT$Y<-PLOT[,paste0("Axis.",AXIS[2])]
-    
+
     FINALPLOT<-(ggplot(PLOT, aes(label=SampleID, x=X, y=Y))
           + theme_bw()
           + theme(plot.title=element_text(size=10), axis.text=element_text(size=8), aspect.ratio = 1, axis.title=element_text(size=8,face="bold"))

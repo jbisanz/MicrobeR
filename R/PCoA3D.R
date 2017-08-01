@@ -47,7 +47,7 @@ if(missing(AXIS)){AXIS=c(1,2,3)}
     DISTMATRIX<-as.matrix(vegan::vegdist(t(sub.OTUlevel), method="bray", binary=FALSE, diag=FALSE, upper=FALSE))
     METRIC="Bray Curtis"
   } else if(METRIC=="jsd"){
-    DISTMATRIX<-textmineR::CalcJSDivergence(sub.OTUlevel, by_rows=FALSE)
+    DISTMATRIX<-as.matrix(distance(otu_table(sub.OTUlevel, taxa_are_rows=T), method="jsd", type="samples"))
     METRIC="Jensen-Shannon Divergence"
   }
 
