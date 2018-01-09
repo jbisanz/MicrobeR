@@ -4,20 +4,20 @@
 \alias{Make.CLR}
 \title{\code{Make.CLR} Make a CLR-normalized Feature/OTU/SV table}
 \usage{
-Make.CLR(TABLE, PRIOR, CZM)
+Make.CLR(FEATURES, PRIOR, CZM)
 }
 \arguments{
+\item{FEATURES}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
+
 \item{PRIOR}{A numeric value to add before log transformation (default 0.5). *Ignored if CZM=TRUE}
 
 \item{CZM}{Should count zero multiplicative method be used instead of adding simple prior (TRUE/FALSE, defaults to FALSE)}
-
-\item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
 }
 \value{
 Table of CLR-normalized Abundances (log2)
 }
 \description{
-Takes a table of Features/OTUs/SVs and converts centered log ratio abundances. See:
+Takes a table of Features/OTUs/SVs and converts to centered log2 ratio abundances. See:
  Compositional analysis: a valid approach to analyze microbiome high-throughput sequencing data
   Gregory B. Gloor, Gregor Reid; Canadian Journal of Microbiology, 2016, 62:692-703, 10.1139/cjm-2015-0821
 For information on CZM replacement see : Martin-Fernandez, J.A., Hron, K., Templ, M., Filzmoser, P., Palarea-Albaladejo, J. Bayesian-multiplicative treatment of count zeros in compositional data sets. Statistical Modelling 2015; 15 (2): 134-158.

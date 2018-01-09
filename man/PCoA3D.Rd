@@ -4,14 +4,14 @@
 \alias{PCoA3D}
 \title{\code{PCoA3D} Generate Distance/Dissimilarities and plot PCoA in interactive 3D plot}
 \usage{
-PCoA(METRIC="braycurtis", METADATA=experiment_metadata, OTUTABLE=otutable, TREE=ggtree, COLOR="Time", SHAPE="Group", SUBSAMPLE=TRUE, AXIS=c(1,2,3), PALETTE=c("red","green"))
+PCoA(METRIC="braycurtis", METADATA=experiment_metadata, FEATURES=otutable, TREE=ggtree, COLOR="Time", SHAPE="Group", SUBSAMPLE=TRUE, AXIS=c(1,2,3), PALETTE=c("red","green"))
 }
 \arguments{
 \item{METRIC}{Desired beta-diversity metric, options are Bray Curtis (braycurtis), Weighted UniFrac (weightedunifrac), UnWeighted UniFrac (unweightedunifrac), Jensen-Shannon diversgence (jsd).}
 
 \item{METADATA}{Metadata table with variables to color or shape points by where sample is row name.}
 
-\item{OTUTABLE}{Table of feature counts where Samples are columns, and IDs are row names.}
+\item{FEATURES}{Table of feature counts where Samples are columns, and IDs are row names.}
 
 \item{TREE}{A phylogenetic tree of phylo class *only required for UniFrac Metrics}
 
@@ -29,5 +29,5 @@ PCoA(METRIC="braycurtis", METADATA=experiment_metadata, OTUTABLE=otutable, TREE=
 Returns plot.
 }
 \description{
-UniFrac is implimented as per Phyloseq, Bray Curtis from Vegan, Jensen-Shannon divergence from textmineR, and PCoA from APE. Plotting via plotly's 3d plotting.
+UniFrac is implimented as per Phyloseq, Bray Curtis from Vegan, Jensen-Shannon divergence from Phyloseq, and PCoA from APE. Plotting via plotly's 3d plotting.
 }

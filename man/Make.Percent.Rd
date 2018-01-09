@@ -7,7 +7,7 @@
 PercentTab<-Make.Percent(FeatureTable)
 }
 \arguments{
-\item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
+\item{FEATURES}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
 }
 \value{
 Table of Percents

@@ -4,11 +4,11 @@
 \alias{Microbiome.Heatmap}
 \title{\code{Microbiome.Heatmap.R} Plot heat map of microbiome data}
 \usage{
-Microbiome.Heatmap(OTUTABLE, METADATA, NTOPFEATURES, TRANSFORM, CATEGORY,
+Microbiome.Heatmap(FEATURES, METADATA, NTOPFEATURES, TRANSFORM, CATEGORY,
   ROWCLUSTER)
 }
 \arguments{
-\item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names.}
+\item{FEATURES}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names.}
 
 \item{METADATA}{Metadata file to be used for blocking.}
 

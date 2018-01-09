@@ -7,7 +7,7 @@
 Microbiome.Barplot(table,metadata,10, "group")
 }
 \arguments{
-\item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
+\item{FEATURES}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
 
 \item{METADATA}{A Table of metadata where sample names are row names.}
 

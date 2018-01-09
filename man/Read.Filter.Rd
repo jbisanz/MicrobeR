@@ -9,7 +9,7 @@ newtable<-filter$Features
 newmetadata<-filter$Metadata
 }
 \arguments{
-\item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names.}
+\item{FEATURES}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names.}
 
 \item{METADATA}{Metadata file where samples are row names.}
 

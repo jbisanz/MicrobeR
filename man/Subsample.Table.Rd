@@ -4,14 +4,14 @@
 \alias{Subsample.Table}
 \title{\code{Subsample.Table} Rarify/Subsample a Feature}
 \usage{
-Subsample.Table(OTUTABLE, DEPTH, SEED)
+Subsample.Table(FEATURES, DEPTH, SEED)
 }
 \arguments{
-\item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
-
 \item{DEPTH}{Count depth, defaults to min(colSums(OTUTABLE)) if not passed}
 
-\item{SEED}{A randomization SEED, defaults to 182 as tribute to scarface and blink.}
+\item{SEED}{A randomization SEED, defaults to 182.}
+
+\item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
 }
 \value{
 Subsampled Table

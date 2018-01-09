@@ -1,1 +1,2 @@
 load("/Users/jbisanz/Documents/Research/MicrobeR/data/testtaxonomy.rds")
+load("/Users/jbisanz/Research/repositories/MicrobeR/data/MicrobeRTestData.RData")

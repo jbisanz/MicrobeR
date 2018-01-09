@@ -4,14 +4,14 @@
 \alias{PCoA}
 \title{\code{PCoA} Generate Distance/Dissimilarities and plot PCoA}
 \usage{
-PCoA(METRIC="braycurtis", METADATA=experiment_metadata, OTUTABLE=otutable, TREE=ggtree, COLOR="Time", SHAPE="Group", SUBSAMPLE=TRUE, AXIS=c(1,2))
+PCoA(METRIC="braycurtis", METADATA=experiment_metadata, FEATURES=otutable, TREE=ggtree, COLOR="Time", SHAPE="Group", SUBSAMPLE=TRUE, AXIS=c(1,2))
 }
 \arguments{
 \item{METRIC}{Desired beta-diversity metric, options are Bray Curtis (braycurtis), Weighted UniFrac (weightedunifrac), UnWeighted UniFrac (unweightedunifrac), Jensen-Shannon diversgence (jsd).}
 
 \item{METADATA}{Metadata Table with variables to color PCoAs by}
 
-\item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
+\item{FEATURES}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
 
 \item{TREE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names, only required for UniFrac Metrics}
 
@@ -29,5 +29,5 @@ PCoA(METRIC="braycurtis", METADATA=experiment_metadata, OTUTABLE=otutable, TREE=
 Returns a ggplot
 }
 \description{
-UniFrac is implimented as per GUniFrac, Bray Curtis from Vegan, Jensen-Shannon divergence from textmineR, and PCoA from APE. Plotting via ggplot2. Will also carry out ADONIS and return p and r2 in plot title.
+UniFrac is implimented as per Phyloseq, Bray Curtis from Vegan, Jensen-Shannon divergence from Phyloseq, and PCoA from APE. Plotting via ggplot2. Will also carry out ADONIS and return p and r2 in plot title.
 }

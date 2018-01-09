@@ -1,6 +1,6 @@
 #' \code{Microbiome.Barplot.R} Create a stacked barplot showing composition of samples.
 #' @description Uses ggplot2 to create a stacked barplot, for example on phylum level abundances. The most abundant features (defaults to 10, based on rowMeans) will be plotted unless user specified. Anything of over 10 features will use default coloring which may be very difficult to interpret.
-#' @param OTUTABLE Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
+#' @param FEATURES Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
 #' @param METADATA A Table of metadata where sample names are row names.
 #' @param NTOPLOT A number of features to plot.
 #' @param CATEGORY A Metadata category to block samples by (faceting via ggplot2)
@@ -8,27 +8,26 @@
 #' @usage Microbiome.Barplot(table,metadata,10, "group")
 #' @export
 
-Microbiome.Barplot<-function(OTUTABLE,METADATA, NTOPLOT, CATEGORY){
+Microbiome.Barplot<-function(FEATURES,METADATA, NTOPLOT, CATEGORY){
 
-  if(missing(NTOPLOT) & nrow(OTUTABLE)>10){NTOPLOT=10}
-  else if (missing(NTOPLOT)) {NTOPLOT=nrow(OTUTABLE)}
+  if(missing(NTOPLOT) & nrow(FEATURES)>10){NTOPLOT=10}
+  else if (missing(NTOPLOT)) {NTOPLOT=nrow(FEATURES)}
 
- OTUTABLE<-Make.Percent(OTUTABLE)
- OTUTABLE<-OTUTABLE[order(rowMeans(OTUTABLE), decreasing = T),]
- if(NTOPLOT<nrow(OTUTABLE)){ #if left over, is added to remainder
-    Remainder<-colSums(OTUTABLE[(NTOPLOT+1):nrow(OTUTABLE),])
-    OTUTABLE<-rbind(OTUTABLE[1:NTOPLOT,], Remainder)
+  FEATURES<-Make.Percent(FEATURES)
+  FEATURES<-FEATURES[order(rowMeans(FEATURES), decreasing = T),]
+ if(NTOPLOT<nrow(FEATURES)){ #if left over, is added to remainder
+    Remainder<-colSums(FEATURES[(NTOPLOT+1):nrow(FEATURES),])
+    FEATURES<-rbind(FEATURES[1:NTOPLOT,], Remainder)
  }
 
- forplot<-reshape2::melt(OTUTABLE)
- colnames(forplot)<-c("Taxa","SampleID","Abundance")
- forplot$Taxa<-factor(forplot$Taxa,levels=rev(levels(forplot$Taxa)))
+ forplot<-TidyConvert.ToTibble(FEATURES, "Taxa") %>% gather(-Taxa, key="SampleID", value="Abundance")
+ forplot$Taxa<-factor(forplot$Taxa,levels=rev(unique(forplot$Taxa)))
  if(!missing(METADATA) & !missing(CATEGORY)){
-  forplot<-merge(forplot, METADATA, by.x="SampleID", by.y="row.names")
+   if(TidyConvert.WhatAmI(METADATA)=="data.frame" | TidyConvert.WhatAmI(METADATA)=="matrix") {METADATA<-TidyConvert.ToTibble(METADATA, "SampleID")}
+  forplot<-left_join(forplot, METADATA, by="SampleID")
  }
 
- 
- 
+
  PLOT<-(ggplot(forplot, aes(x=SampleID, y=Abundance, fill=Taxa))
         + geom_bar(stat="identity")
         + theme_classic()

@@ -7,7 +7,7 @@
 SummarizedTaxa<-Summarize.Taxa(SVtable, TaxTable)
 }
 \arguments{
-\item{OTUTABLE}{Table of feature/OTU/SV COUNTS where Samples are columns, and IDs are row names}
+\item{FEATURES}{Table of feature/OTU/SV COUNTS where Samples are columns, and IDs are row names}
 
 \item{TAXONOMY}{Table of taxonomies to aggregate on as identified above wherein the column names correspond to the taxonomic level}
 }

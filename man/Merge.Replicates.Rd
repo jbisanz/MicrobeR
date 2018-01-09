@@ -9,15 +9,17 @@ newtable<-x$Features
 newmeta<-x$Metadata
 }
 \arguments{
-\item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
+\item{FEATURES}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
 
 \item{METADATA}{Table of metadata with sample name as row name}
 
 \item{CATEGORY}{A category used to dereplicate sequences , ex. "RepID"}
+
+\item{VERBOSE}{Should report on number of replicates be given (T/F)}
 }
 \value{
 A named list of [[1]] new Feature/OTU/SV table and [[2]] collapsed metadata file
 }
 \description{
-Collapses a table via aggregate FUN=sum based on a provided column in the datatable.
+Collapses technical replicates by summing replicate counts.
 }

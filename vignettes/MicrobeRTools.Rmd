@@ -1,5 +1,5 @@
 ---
-title: "MicrobeR Tools"
+title: "MicrobeR v0.3"
 author: "J Bisanz"
 date: "`r Sys.Date()`"
 output: 
@@ -10,64 +10,72 @@ output:
     theme: spacelab
 ---
 
+```{r, include=F}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, tidy=FALSE, cache=FALSE)
+```
+
 ## Philosophy
 
-MicrobeR is intended to supplement other packages such as phyloseq and vegan by providing wrapped functions for common analysis. As such, it calls upon these packages frequently behind the scenes. MicrobeR is primarily intended for data visualization and exploration of count-based microbiome data such as 16S rRNA gene sequencing.  These functions are intended for data exploration and as such can be wrapped using plotly's `ggplotly` to create interactive figures. Additionally, all plotting is carried out by ggplot2 so they can be manipulated directly through the addition of standard ggplot2 functions.
+MicrobeR is intended to supplement other packages such as phyloseq and vegan by providing wrapped functions for common analysis. As such, it calls upon these packages frequently behind the scenes. MicrobeR is primarily intended for data visualization and exploration of count-based microbiome data such as 16S rRNA gene sequencing.  These functions are intended for exploration and as such can be wrapped using plotly's `ggplotly` to create interactive figures. Additionally, all plotting is carried out by ggplot2 so they can be manipulated directly through the addition of standard ggplot2 functions.
 
 ## Expected Input Data Format
 
 MicrobeR relies on 4 main types of data:
 
-* Feature Table: This could be OTUs/SVs/ISUs/KOcounts or any other type of compositional count. MicrobeR ALWAYS expects that sample names are colnames, and feature names are rownames. For historical reasons, all functions call this argument OTUTABLE.
+* Feature Table: This could be OTUs/SVs/ISUs/KOcounts or any other type of compositional count. MicrobeR ALWAYS expects that sample names are colnames, and feature names are rownames. This is expected via the FEATURES argument for most functions.
 * Metadata Table: This is a table of sample metadata. MicrobeR ALWAYS expects that sample names are rownames, and categories names are columns. All functions refer to this as METADATA. *Note: All samples present in the Feature table MUST have metadata and an error will be returned if this is not the case.
 * Taxonomy Table: This is a table that contains the feature identifier (ex. OTU# or SV sequence) as rownames with the assigned Kingdom, Phylum, Class, Order, Family, Genus, and Species as columns. Additional columns are tolerated in this table as long as the previously mentioned columns are present.
-* Phylogenetic Tree: This is a tree of the phylo-class used primarily for calculated UniFrac distances. This could for example be the gg_13_8_otus/97_otus.tree if QIIME closed reference picking was applied. Or could be the result of MicrobeR's Make.Tree function. For reading in the GG tree, phyloseqs import function is reccomended due to parsing issues.
+* Phylogenetic Tree: This is a tree of the phylo-class used primarily for calculated UniFrac distances. This could for example be the gg_13_8_otus/97_otus.tree if QIIME closed reference picking was applied. Or could be the result of MicrobeR's Make.Tree.R/Make.Tree.QIIME. function. For reading in the GG tree, phyloseqs import function is reccomended due to parsing issues.
 
 ***
+## Changes
 
+In version 0.3, the OTUTABLE argument has been changed to FEATURES. Other changes have been made under the hood and at some point in the future the dependency of sample/feature IDs in row names will be removed.
+
+***
 ## MicrobeR Functions
 
 ### Visualization
-`Microbiome.Barplot.R`: Creates a barplot of %-normalized abundances.
-<br>`Microbiome.Heatmap.R`: Creates a heatmap of feature abundances.
-<br>`PCoA.R`: Calculate a distance/dissimilarity metric, carryout PCoA and plot a 2D plot with desired metadata included.
-<br>`PCoA3D.R`: Similar to above but creating a 3D interactive version. This may not work on some windows computers.
+`Microbiome.Barplot`: Creates a barplot of %-normalized abundances.
+<br>`Microbiome.Heatmap`: Creates a heatmap of feature abundances.
+<br>`PCoA`: Calculate a distance/dissimilarity metric, carryout PCoA and plot a 2D plot with desired metadata included.
+<br>`PCoA3D`: Similar to above but creating a 3D interactive version. This may not work on some windows computers.
 
 ### Normalization
 `Make.CLR.R`: Carry out a centered-log2-ratio transformation using either a prior or the count zero multiplicative (CZM) method.
-<br>`Make.Percent.R`: Convert table of counts, to a percentage for plotting purposes.
-<br>`Read.Filter.R`: Removes samples that fell below a certain threshold of read depth. This should be used to identify poorly sequenced samples and remove controls from datasets.
-<br>`Subsample.Table.R`: Subsample feature table for metrics such as unweighted UniFrac using a defined randomization seed for reproducibility.
-<br>`Summarize.Taxa.R`: Analogous to QIIME's summarize_taxa.py. Creates a list of taxonomically summarized versions of the feature table. Useful for plotting and some statistical treatments.
-<br>`Confidence.Filter.OTUs.R`: Removes features which are present in less than X samples with a total of less than Y reads. Useful for removing noisy sparse features from datasets before visualization or statistical analysis.
-<br>`Filter.OTUs.Fraction.R`: Removes features which make up less than X% of dataset for diversity metrics as recommended by Bokulich et al. doi:10.1038/nmeth.2276.
+<br>`Make.Percent`: Convert table of counts, to a percentage for plotting purposes.
+<br>`Read.Filter`: Removes samples that fell below a certain threshold of read depth. This should be used to identify poorly sequenced samples and remove controls from datasets.
+<br>`Subsample.Table`: Subsample feature table for metrics such as unweighted UniFrac using a defined randomization seed for reproducibility.
+<br>`Summarize.Taxa`: Analogous to QIIME's summarize_taxa.py. Creates a list of taxonomically summarized versions of the feature table. Useful for plotting and some statistical treatments.
+<br>`Confidence.Filter`: Removes features which are present in less than X samples with a total of less than Y reads. Useful for removing noisy sparse features from datasets before visualization or statistical analysis.
+<br>`Filter.Fraction`: Removes features which make up less than X% of dataset for diversity metrics as recommended by Bokulich et al. doi:10.1038/nmeth.2276.
 
 ### Other
-`Make.Tree.R`: Make a phylogenetic tree for UniFrac metrics. This function relies on an install of QIIME with muscle. See documentation for this function for more information.
-<br>`Merge.Replicates.R`: Merges replicate samples (for example sequencing replicates) by summing reads together.
-<br>`Nice.Table.R`: A wrapper to create an interactive table for data exploration or embedding into markdown document.
+`Make.Tree.QIIME`: Make a phylogenetic tree. This function relies on an install of QIIME with muscle. See documentation for this function for more information.
+`Make.Tree.R`: Make a phylogenetic tree via an [R based approach](https://f1000research.com/articles/5-1492/v2).
+<br>`Merge.Replicates`: Merges replicate samples (for example sequencing replicates) by summing reads together.
+<br>`Nice.Table`: A wrapper to create an interactive table for data exploration or embedding into markdown document.
 
 ### Embedded Data
 `data("MicrobeRTestData")`: Creates the following objects based on Bisanz et al. doi: 10.1128/AEM.00780-15. The data was created during a tutorial on microbiome analysis [here](https://jbisanz.github.io/BMS270_BMI219/).
-<br>- metadata: Example list of metadata for 20 individuals sampled 2x.
-<br>- table: Example SV table of count data.
-<br>- taxonomy: Table of taxonomic assignments.
-<br>- tree: Phylogenetic tree of SVs.
+<br>- MicrobeR.Demo.Metadata: Example list of metadata for 20 individuals sampled 2x.
+<br>- MicrobeR.Demo.SVtable: Example SV table of count data.
+<br>- MicrobeR.Demo.Taxonomy: Table of taxonomic assignments.
+<br>- MicrobeR.Demo.Tree: Phylogenetic tree of SVs.
 
 ***
 # Example Usage
 In these examples, we will be renderering interactive versions of the figures by wrapping all functions in `ggplotly()`. This is optional but is helpful for data exploration.  
-We can start by installing the package if you have not already. If installation fails, check which dependency was missing and install manually using `install.packages()` or bioconductors `biocLite()`.
+We can start by installing the package if you have not already. If installation fails, check which dependency was missing and install manually using `install.packages()` or bioconductor's `biocLite()`.
 ```{r, eval=F}
 library(devtools)
 install_github("jbisanz/MicrobeR")
 ```
 
 Next we can load it and check the version. We will also load plotly which allows for interactive visualizations. For publication figures I would avoid this and save as PDFs.
-```{r}
+```{r, message=F}
 library(MicrobeR)
 library(plotly)
-packageVersion("MicrobeR")
 ```
 
 We can start by loading the included vaginal microbiome dataset from Bisanz et al. doi: 10.1128/AEM.00780-15.
@@ -75,76 +83,45 @@ We can start by loading the included vaginal microbiome dataset from Bisanz et a
 data("MicrobeRTestData")
 ```
 
-Next we can inspect our metadata using the `Nice.Table()` command. Note that the data can be searched, filtered, sorted, and exported to common file formats.
+Next we can inspect our metadata using the `Nice.Table()` command. Note that the data can be searched, filtered, sorted, and exported to common file formats. This is useful if using R in console or for markdown documents.
 ```{r}
-Nice.Table(metadata)
+Nice.Table(MicrobeR.Demo.Metadata)
 ```
 
-Lets explore global trends in our data with a PCoA using Bray Curtis. Note that ggplotly creates an interactive version and `+ ggtitle()` has been added to manually change the title. Notice how an ADONIS test is automatically applied. This can be disabled with ADONIS=FALSE.
+Lets explore global trends in our data with a PCoA using Bray Curtis. `+ ggtitle()` has been added to manually change the title. Notice how an ADONIS test is automatically applied. This can be disabled with ADONIS=FALSE.
 
 ```{r}
-ggplotly(PCoA(METRIC="braycurtis", OTUTABLE = table, METADATA = metadata, COLOR = "Timepoint") + ggtitle("Exploratory PCoA"))
+PCoA(METRIC="braycurtis", FEATURES = MicrobeR.Demo.SVtable, METADATA = MicrobeR.Demo.Metadata, COLOR = "Timepoint") + ggtitle("Exploratory PCoA of Bray Curtis Dissimilarities")
 ```
 
 We can also make a 3D version of this. If this, or the figure above do not show, enable webgl in your browser.
 
 ```{r}
-PCoA3D(METRIC="braycurtis", OTUTABLE = table, METADATA = metadata, COLOR="Timepoint")
+PCoA3D(METRIC="braycurtis", FEATURES = MicrobeR.Demo.SVtable, METADATA = MicrobeR.Demo.Metadata, COLOR="Timepoint")
 ```
 
 Before going further with visualization. Lets remove some of the noisy features from our dataset. In this case it will need to be in 2 samples with at least 100 reads across all samples.
 
 ```{r}
-conf.table<-Confidence.Filter.OTUs(table, 2, 100)
+conf.table<-Confidence.Filter(MicrobeR.Demo.SVtable, 2, 100)
 ```
 
 Now lets create a taxa summarized version of our data for plotting purposes.
 ```{r}
-summarized.taxa<-Summarize.Taxa(conf.table, taxonomy)
+summarized.taxa<-Summarize.Taxa(conf.table, MicrobeR.Demo.Taxonomy)
 print(paste0("We have ", nrow(summarized.taxa$Genus), " genera in dataset."))
 ```
 
-Now that we have summarized taxa, we can plot these in a barplot. For barplots, >10 features generally creates extremely difficult to interpret figures, as such >10 is automatically added to a remainder, but this number can be manually altered. See instructions for more information. In this case I will plot genus level abundances.
+Now that we have summarized taxa, we can plot these in a barplot. For barplots, >10 features generally creates extremely difficult to interpret figures, as such >10 is automatically added to a remainder, but this number can be manually altered. See instructions for more information. `ggplotly` has been used as a wrapper to aid in data exploration.
 
 ```{r}
-ggplotly(Microbiome.Barplot(OTUTABLE = summarized.taxa$Genus, METADATA = metadata, CATEGORY = "Timepoint"))
+ggplotly(Microbiome.Barplot(FEATURES = summarized.taxa$Genus, METADATA = MicrobeR.Demo.Metadata, CATEGORY = "Timepoint"))
 ```
 
 
-We can also look at genera for this analysis using a heat map plotting the 50 most abundant genera.
+We can also look at genera for this analysis using a heat map plotting the 30 most abundant genera.
 ```{r}
-Microbiome.Heatmap(OTUTABLE=summarized.taxa$Genus, METADATA=metadata, ROWCLUSTER = "abundance", CATEGORY="Timepoint")
+Microbiome.Heatmap(FEATURES=summarized.taxa$Genus, METADATA=MicrobeR.Demo.Metadata, NTOPFEATURES = 30, ROWCLUSTER = "abundance", CATEGORY="Timepoint")
 ```
 
-Say we want to do some additional analysis. In this case train a random forest classifier to predict 2nd trimester versus birth. Counts, or even fractional abundances, are often inappropriate due to their compositional nature. In this case we will apply a CLR transformation to help with this. See references in documention for Make.CLR for more information. *Note: tuning of RF parameters would help considerably here as would MANY more samples. This is for example only.
-
-```{r}
-library(randomForest)
-library(ROCR)
-
-set.seed(09072017)
-clr.table<-Make.CLR(table, CZM = TRUE)
-trainset<-sample(colnames(clr.table), round(ncol(clr.table)*2/3,0))#create a test and training set using 1/3 and 2/3 respectively.
-testset<-colnames(clr.table)[!colnames(clr.table) %in% trainset]
-
-
-tune<-tuneRF(t(clr.table[,trainset]),factor(metadata[trainset,]$Timepoint), ntreeTry=1000, stepFactor=1.1,improve=0.01, trace=TRUE, plot=TRUE, dobest=FALSE)
-trainrf<-randomForest(t(clr.table[,trainset]), factor(metadata[trainset,]$Timepoint), ntree=10000, mtry=13)
-```
-
-We can check our best predictors below.
-```{r}
-varImpPlot(trainrf)
-```
-
-Now we can look at the performance.
-```{r}
-test.prob = predict(trainrf,type="prob",newdata=t(clr.table[,testset]))[,2]
-test.pred = prediction(test.prob, factor(metadata[testset,]$Timepoint))
-test.perf = performance(test.pred,"tpr","fpr")
-plot(test.perf,main="ROC Curve",col=2,lwd=2)
-abline(a=0,b=1,lwd=2,lty=2,col="gray")
-
-AUC=performance(test.pred,"auc") #Calculate the AUC value
-print(paste("Area under curve for ROC is", round(AUC@y.values[[1]],3)))
-```
+***
