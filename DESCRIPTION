@@ -19,7 +19,7 @@ Imports:
     plotly (>= 4.7.1),
     phyloseq (>= 1.20.0),
     zCompositions (>= 1.0.3.1),
-    Biostrings (>= 2.44.2),
+    Biostrings (>= 2.42.1),
     ggplot2 (>= 2.2.1),
     dplyr (>= 0.5.0),
     tibble (>= 1.2),
