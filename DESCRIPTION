@@ -13,7 +13,7 @@ VignetteBuilder: knitr
 Imports:
     ape (>= 4.1),
     phangorn (>= 2.2.0),
-    DECIPHER (>= 2.4.0),
+    DECIPHER (>= 2.2.0),
     vegan (>= 2.4.2),
     DT (>= 0.2),
     plotly (>= 4.7.1),
