@@ -21,7 +21,7 @@ Imports:
     zCompositions (>= 1.0.3.1),
     Biostrings (>= 2.44.2),
     ggplot2 (>= 2.2.1),
-    dplyr (>= 0.7.4),
+    dplyr (>= 0.5.0),
     tibble (>= 1.2),
     tidyr (>= 0.7.2),
     magrittr (>= 1.5),
