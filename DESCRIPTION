@@ -1,7 +1,7 @@
 Package: MicrobeR
 Type: Package
 Title: Handy functions for microbiome analysis in R
-Version: 0.3.0
+Version: 0.3.1
 Maintainer: Jordan Bisanz <jordan.bisanz@gmail.com>
 Description: Helpful tools for visualizing and processing microbiome related data.
 License: None
@@ -13,6 +13,8 @@ VignetteBuilder: knitr
 Imports:
     ape (>= 4.1),
     phangorn (>= 2.1.1),
+    picante (>= 1.6),
+    philr (>= 1.4.0),
     DECIPHER (>= 2.2.0),
     vegan (>= 2.4.2),
     DT (>= 0.2),
