@@ -1,4 +1,6 @@
-#' \code{Read.Filter} Remove samples with less than a user specified number of reads.
+#' Read.Filter
+#'
+#' Remove samples with less than a user specified number of reads.
 #'
 #' @param FEATURES Table of feature/OTU/SV counts where Samples are columns, and IDs are row names.
 #' @param METADATA Metadata file where samples are row names.

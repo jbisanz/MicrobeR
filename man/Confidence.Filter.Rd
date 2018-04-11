@@ -16,8 +16,8 @@ Confidence.Filter(FEATURES, MINSAMPS, MINREADS, VERBOSE)
 \item{VERBOSE}{Should summary be printed? (T/F)}
 }
 \value{
-filtered
+filtered feature table
 }
 \description{
-\code{Confidence.Filter} Takes a table of features and filters for such that they are present in at least X samples with at least a total of Y reads
+Takes a table of features and filters for such that they are present in at least X samples with at least a total of Y reads
 }

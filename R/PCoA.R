@@ -1,6 +1,6 @@
-#' \code{PCoA} Generate Distance/Dissimilarities and plot PCoA
+#' PCoA
 #'
-#' @description  UniFrac is implimented as per Phyloseq, Bray Curtis from Vegan, Jensen-Shannon divergence from Phyloseq, and PCoA from APE. Plotting via ggplot2. Will also carry out ADONIS and return p and r2 in plot title.
+#' UniFrac is implimented as per Phyloseq, Bray Curtis from Vegan, Jensen-Shannon divergence from Phyloseq, and PCoA from APE. Plotting via ggplot2. Will also carry out ADONIS and return p and r2 in plot title. Distances calculated from proportions.
 #'
 #' @param METRIC Desired beta-diversity metric, options are Bray Curtis (braycurtis), Weighted UniFrac (weightedunifrac), UnWeighted UniFrac (unweightedunifrac), Jensen-Shannon diversgence (jsd).
 #' @param METADATA Metadata Table with variables to color PCoAs by

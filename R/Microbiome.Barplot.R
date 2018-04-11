@@ -1,4 +1,5 @@
-#' \code{Microbiome.Barplot.R} Create a stacked barplot showing composition of samples.
+#' Microbiome.Barplot.R
+#'
 #' @description Uses ggplot2 to create a stacked barplot, for example on phylum level abundances. The most abundant features (defaults to 10, based on rowMeans) will be plotted unless user specified. Anything of over 10 features will use default coloring which may be very difficult to interpret.
 #' @param FEATURES Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
 #' @param METADATA A Table of metadata where sample names are row names.

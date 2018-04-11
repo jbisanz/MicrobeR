@@ -1,4 +1,6 @@
-#' \code{Make.Proportion} Takes a table of Features/OTUs/SVs and converts to Proportion (Sum to 1).
+#' Make.Proportion
+#'
+#' Takes a table of Features/OTUs/SVs and converts to Proportion (Sum to 1).
 #'
 #' @param FEATURES Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
 #' @usage ProportionTab<-Make.Proportion(FeatureTable)

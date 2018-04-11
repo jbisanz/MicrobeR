@@ -2,7 +2,7 @@
 % Please edit documentation in R/Make.Proportion.R
 \name{Make.Proportion}
 \alias{Make.Proportion}
-\title{\code{Make.Proportion} Takes a table of Features/OTUs/SVs and converts to Proportion (Sum to 1).}
+\title{Make.Proportion}
 \usage{
 ProportionTab<-Make.Proportion(FeatureTable)
 }
@@ -13,5 +13,5 @@ ProportionTab<-Make.Proportion(FeatureTable)
 Table of Proportions
 }
 \description{
-\code{Make.Proportion} Takes a table of Features/OTUs/SVs and converts to Proportion (Sum to 1).
+Takes a table of Features/OTUs/SVs and converts to Proportion (Sum to 1).
 }

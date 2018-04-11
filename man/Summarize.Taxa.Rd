@@ -2,7 +2,16 @@
 % Please edit documentation in R/Summarize.Taxa.R
 \name{Summarize.Taxa}
 \alias{Summarize.Taxa}
-\title{\code{Summarize.Taxa} Make taxa summary tables similar to QIIME summarize_taxa.py}
+\title{Summarize.Taxa
+Make taxa summary tables similar to QIIME summarize_taxa.py. Summarizes through the first 7 levels of taxonomy of OTUs/SVs wherein the levels are labeled as:
+\cr 1-Kingdom
+\cr 2-Phylum
+\cr 3-Class
+\cr 4-Order
+\cr 5-Family
+\cr 6-Genus
+\cr 7-Species
+\cr 8- Features with full taxonomy strings}
 \usage{
 SummarizedTaxa<-Summarize.Taxa(SVtable, TaxTable)
 }
@@ -15,13 +24,14 @@ SummarizedTaxa<-Summarize.Taxa(SVtable, TaxTable)
 A Named List of data frames of each level. Access by like TABLE$Genus or TABLE[[i]] where i is taxonomic level above.
 }
 \description{
-Summarizes through the first 7 levels of taxonomy of OTUs/SVs wherein the levels are labeled as:
-1-Kingdom
-2-Phylum
-3-Class
-4-Order
-5-Family
-6-Genus
-7-Species
-8- Features with full taxonomy strings
+Summarize.Taxa
+Make taxa summary tables similar to QIIME summarize_taxa.py. Summarizes through the first 7 levels of taxonomy of OTUs/SVs wherein the levels are labeled as:
+\cr 1-Kingdom
+\cr 2-Phylum
+\cr 3-Class
+\cr 4-Order
+\cr 5-Family
+\cr 6-Genus
+\cr 7-Species
+\cr 8- Features with full taxonomy strings
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/Make.CLR.R
 \name{Make.CLR}
 \alias{Make.CLR}
-\title{\code{Make.CLR} Make a CLR-normalized Feature/OTU/SV table}
+\title{Make.CLR}
 \usage{
 Make.CLR(FEATURES, PRIOR, CZM)
 }

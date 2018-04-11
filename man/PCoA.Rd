@@ -2,7 +2,7 @@
 % Please edit documentation in R/PCoA.R
 \name{PCoA}
 \alias{PCoA}
-\title{\code{PCoA} Generate Distance/Dissimilarities and plot PCoA}
+\title{PCoA}
 \usage{
 PCoA(METRIC="braycurtis", METADATA=experiment_metadata, FEATURES=otutable, TREE=ggtree, COLOR="Time", SHAPE="Group", SUBSAMPLE=TRUE, AXIS=c(1,2))
 }
@@ -29,5 +29,5 @@ PCoA(METRIC="braycurtis", METADATA=experiment_metadata, FEATURES=otutable, TREE=
 Returns a ggplot
 }
 \description{
-UniFrac is implimented as per Phyloseq, Bray Curtis from Vegan, Jensen-Shannon divergence from Phyloseq, and PCoA from APE. Plotting via ggplot2. Will also carry out ADONIS and return p and r2 in plot title.
+UniFrac is implimented as per Phyloseq, Bray Curtis from Vegan, Jensen-Shannon divergence from Phyloseq, and PCoA from APE. Plotting via ggplot2. Will also carry out ADONIS and return p and r2 in plot title. Distances calculated from proportions.
 }

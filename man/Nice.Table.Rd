@@ -2,7 +2,7 @@
 % Please edit documentation in R/Nice.Table.R
 \name{Nice.Table}
 \alias{Nice.Table}
-\title{\code{Nice.Table} Print interactive table for markdown documents using datatable from DT with the options for export included.}
+\title{Nice.Table}
 \usage{
 Nice.Table(TABLE, NROW)
 }

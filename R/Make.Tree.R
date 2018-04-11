@@ -1,4 +1,6 @@
-#' \code{Make.Tree.X} Generate a phylogenetic tree and optional plot
+#' Make.Tree
+#'
+#' Generate a phylogenetic tree and optional plot.
 #'
 #' @description Takes a series of sequences and uses muscle and make_phylogeny (Make.Tree.QIIME) OR DECIPHER and phangorn (Make.Tree.R) as per https://f1000research.com/articles/5-1492/v2. The R-method will take considerably longer and becomes unusable for >a few hundred features. For QIIME method: can be used with MacQIIME or QIIME. Will default to MacQIIME locations. A file called Feature_Seqs.tree will be created in your working directory for future use.  Uses midpoint rooting, and fasttree. NOTE: This is using system commands... probabily will only work on mac and linux. If you are using windows reconsider your life choices and consider dual booting Ubuntu.
 #' @param FEATURENAMES The names of your features/OTUs/SVs. Will be the row names of your input table in most cases.

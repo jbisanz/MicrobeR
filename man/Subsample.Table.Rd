@@ -2,14 +2,16 @@
 % Please edit documentation in R/Subsample.Table.R
 \name{Subsample.Table}
 \alias{Subsample.Table}
-\title{\code{Subsample.Table} Rarify/Subsample a Feature}
+\title{Subsample.Table}
 \usage{
-Subsample.Table(FEATURES, DEPTH, SEED)
+Subsample.Table(FEATURES, DEPTH, SEED, VERBOSE)
 }
 \arguments{
 \item{DEPTH}{Count depth, defaults to min(colSums(OTUTABLE)) if not passed}
 
 \item{SEED}{A randomization SEED, defaults to 182.}
+
+\item{VERBOSE}{Should progress and metrics be printed to screen via message()? Default=TRUE}
 
 \item{OTUTABLE}{Table of feature/OTU/SV counts where Samples are columns, and IDs are row names}
 }

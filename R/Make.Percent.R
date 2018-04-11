@@ -1,4 +1,6 @@
-#' \code{Make.Percent} Takes a table of Features/OTUs/SVs and converts to Percentages (Sum to 100).
+#' Make.Percent
+#'
+#' Takes a table of Features/OTUs/SVs and converts to Percentages (Sum to 100).
 #'
 #' @param FEATURES Table of feature/OTU/SV counts where Samples are columns, and IDs are row names
 #' @usage PercentTab<-Make.Percent(FeatureTable)

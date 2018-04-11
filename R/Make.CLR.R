@@ -1,5 +1,6 @@
-#' \code{Make.CLR} Make a CLR-normalized Feature/OTU/SV table
-#' @description  Takes a table of Features/OTUs/SVs and converts to centered log2 ratio abundances. See:
+#' Make.CLR
+#'
+#' Takes a table of Features/OTUs/SVs and converts to centered log2 ratio abundances. See:
 #'  Compositional analysis: a valid approach to analyze microbiome high-throughput sequencing data
 #'   Gregory B. Gloor, Gregor Reid; Canadian Journal of Microbiology, 2016, 62:692-703, 10.1139/cjm-2015-0821
 #' For information on CZM replacement see : Martin-Fernandez, J.A., Hron, K., Templ, M., Filzmoser, P., Palarea-Albaladejo, J. Bayesian-multiplicative treatment of count zeros in compositional data sets. Statistical Modelling 2015; 15 (2): 134-158.

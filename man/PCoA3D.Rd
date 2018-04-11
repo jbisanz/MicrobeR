@@ -2,7 +2,7 @@
 % Please edit documentation in R/PCoA3D.R
 \name{PCoA3D}
 \alias{PCoA3D}
-\title{\code{PCoA3D} Generate Distance/Dissimilarities and plot PCoA in interactive 3D plot}
+\title{PCoA3D}
 \usage{
 PCoA(METRIC="braycurtis", METADATA=experiment_metadata, FEATURES=otutable, TREE=ggtree, COLOR="Time", SHAPE="Group", SUBSAMPLE=TRUE, AXIS=c(1,2,3), PALETTE=c("red","green"))
 }

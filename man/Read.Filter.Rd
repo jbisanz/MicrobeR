@@ -2,7 +2,7 @@
 % Please edit documentation in R/Read.Filter.R
 \name{Read.Filter}
 \alias{Read.Filter}
-\title{\code{Read.Filter} Remove samples with less than a user specified number of reads.}
+\title{Read.Filter}
 \usage{
 filter<-Read.Filter(svtable, metadata, 5000)
 newtable<-filter$Features
@@ -23,5 +23,5 @@ newmetadata<-filter$Metadata
 A named list containing new feature table and metadata.
 }
 \description{
-\code{Read.Filter} Remove samples with less than a user specified number of reads.
+Remove samples with less than a user specified number of reads.
 }

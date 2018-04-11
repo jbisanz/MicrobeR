@@ -2,7 +2,7 @@
 % Please edit documentation in R/Microbiome.Heatmap.R
 \name{Microbiome.Heatmap}
 \alias{Microbiome.Heatmap}
-\title{\code{Microbiome.Heatmap.R} Plot heat map of microbiome data}
+\title{Microbiome.Heatmap.R}
 \usage{
 Microbiome.Heatmap(FEATURES, METADATA, NTOPFEATURES, TRANSFORM, CATEGORY,
   ROWCLUSTER)

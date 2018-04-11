@@ -2,7 +2,7 @@
 % Please edit documentation in R/Make.Percent.R
 \name{Make.Percent}
 \alias{Make.Percent}
-\title{\code{Make.Percent} Takes a table of Features/OTUs/SVs and converts to Percentages (Sum to 100).}
+\title{Make.Percent}
 \usage{
 PercentTab<-Make.Percent(FeatureTable)
 }
@@ -13,5 +13,5 @@ PercentTab<-Make.Percent(FeatureTable)
 Table of Percents
 }
 \description{
-\code{Make.Percent} Takes a table of Features/OTUs/SVs and converts to Percentages (Sum to 100).
+Takes a table of Features/OTUs/SVs and converts to Percentages (Sum to 100).
 }

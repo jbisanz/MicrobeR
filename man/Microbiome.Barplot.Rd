@@ -2,7 +2,7 @@
 % Please edit documentation in R/Microbiome.Barplot.R
 \name{Microbiome.Barplot}
 \alias{Microbiome.Barplot}
-\title{\code{Microbiome.Barplot.R} Create a stacked barplot showing composition of samples.}
+\title{Microbiome.Barplot.R}
 \usage{
 Microbiome.Barplot(table,metadata,10, "group")
 }

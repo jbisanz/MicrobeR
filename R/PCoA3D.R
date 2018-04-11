@@ -1,4 +1,4 @@
-#' \code{PCoA3D} Generate Distance/Dissimilarities and plot PCoA in interactive 3D plot
+#' PCoA3D
 #'
 #' @description  UniFrac is implimented as per Phyloseq, Bray Curtis from Vegan, Jensen-Shannon divergence from Phyloseq, and PCoA from APE. Plotting via plotly's 3d plotting.
 #'

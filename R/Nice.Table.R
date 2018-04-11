@@ -1,4 +1,4 @@
-#' \code{Nice.Table} Print interactive table for markdown documents using datatable from DT with the options for export included.
+#' Nice.Table
 #'
 #' @description Function to simplify the following command DT::datatable(TABLE, extensions='Buttons', options=list(pageLength=LENGTH, dom='bfrtip', buttons=c('copy','csv','excel', 'pdf') ))
 #'

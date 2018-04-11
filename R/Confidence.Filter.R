@@ -1,12 +1,12 @@
 #' Filter features such that they are present in at least X samples with at least a total of Y reads
 #'
-#' \code{Confidence.Filter} Takes a table of features and filters for such that they are present in at least X samples with at least a total of Y reads
+#' Takes a table of features and filters for such that they are present in at least X samples with at least a total of Y reads
 #'
 #' @param FEATURES Table of feature/OTU/SV counts where Samples are columns, and feature IDs are row names
 #' @param MINSAMPS A minimum number of samples for the feature/OTU/SV to be observed in
 #' @param MINREADS A minimum number of reads for a feature/OTUs/SV to be kept across all samples
 #' @param VERBOSE Should summary be printed? (T/F)
-#' @return filtered
+#' @return filtered feature table
 #' @export
 
 Confidence.Filter<-function(FEATURES,MINSAMPS,MINREADS,VERBOSE){

@@ -1,6 +1,6 @@
-#' \code{Microbiome.Heatmap.R} Plot heat map of microbiome data
+#' Microbiome.Heatmap.R
 #'
-#' @description Creates a heat map based based on user provided table. Transforms to log2(percent), log10(percent), or CLR as requested. For plotting purposes, a prior of 0.01% is added to the log percent abundances.
+#' Creates a heat map based based on user provided table. Transforms to log2(percent), log10(percent), or CLR as requested. For plotting purposes, a prior of 0.01% is added to the log percent abundances.
 #'
 #' @param FEATURES Table of feature/OTU/SV counts where Samples are columns, and IDs are row names.
 #' @param METADATA Metadata file to be used for blocking.

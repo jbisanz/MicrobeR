@@ -1,4 +1,6 @@
-#' \code{Merge.Replicates} Sum counts together for replicates (ex. pcr/extraction/sequencing run)
+#' Merge.Replicates
+#'
+#' Sum counts together for replicates (ex. pcr/extraction/sequencing run)
 #'
 #' @description Collapses technical replicates by summing replicate counts.
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/Merge.Replicates.R
 \name{Merge.Replicates}
 \alias{Merge.Replicates}
-\title{\code{Merge.Replicates} Sum counts together for replicates (ex. pcr/extraction/sequencing run)}
+\title{Merge.Replicates}
 \usage{
 x<-Merge.Replicates(svtable, metadata, "UniqueId")
 newtable<-x$Features
@@ -22,4 +22,7 @@ A named list of [[1]] new Feature/OTU/SV table and [[2]] collapsed metadata file
 }
 \description{
 Collapses technical replicates by summing replicate counts.
+}
+\details{
+Sum counts together for replicates (ex. pcr/extraction/sequencing run)
 }

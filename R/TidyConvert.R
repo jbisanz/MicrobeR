@@ -1,6 +1,6 @@
-#' Convert between table formats as needed (used behind the scenes)
+#' Tidy.Convert
 #'
-#' \code{TidyConvert} Detects formatting of tables and interconverts between data.frame/data.table/matrix/tibble as needed.
+#' Convert between table formats as needed (used behind the scenes) and is not fully implemented. TidyConvert Detects formatting of tables and interconverts between data.frame/data.table/matrix/tibble as needed.
 #' When a format is encountered that does not use row names (data.table, tibble), the first column is always expected to be the key although right now a user supplied key is required.
 #'
 #' @param TABLE Table of feature/OTU/SV counts where Samples are columns, and feature IDs are row names.

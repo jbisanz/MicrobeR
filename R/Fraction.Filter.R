@@ -1,4 +1,6 @@
-#' \code{Filter.OTUs.Fraction} Remove Features/OTUs/SVs representing less than a certain specified fraction of the total dataset. Similar to filter_otus_from_otutable.py in QIIME.
+#' Filter.OTUs.Fraction
+#'
+#' Remove Features/OTUs/SVs representing less than a certain specified fraction of the total dataset. Similar to filter_otus_from_otutable.py in QIIME.
 #'
 #' @param FEATURES Table of feature/OTU/SV counts where Samples are columns, and IDs are row names.
 #' @param MINFRACTION A fraction to use to filter.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/Make.Tree.R
 \name{Make.Tree.QIIME}
 \alias{Make.Tree.QIIME}
-\title{\code{Make.Tree.X} Generate a phylogenetic tree and optional plot}
+\title{Make.Tree}
 \usage{
 Make.Tree.QIIME(FEATURENAMES, FEATURESEQS, MUSCLE, MAKEPHY, PRINTTREE)
 }
@@ -22,4 +22,7 @@ Returns tree object and prints a phylogenetic tree
 }
 \description{
 Takes a series of sequences and uses muscle and make_phylogeny (Make.Tree.QIIME) OR DECIPHER and phangorn (Make.Tree.R) as per https://f1000research.com/articles/5-1492/v2. The R-method will take considerably longer and becomes unusable for >a few hundred features. For QIIME method: can be used with MacQIIME or QIIME. Will default to MacQIIME locations. A file called Feature_Seqs.tree will be created in your working directory for future use.  Uses midpoint rooting, and fasttree. NOTE: This is using system commands... probabily will only work on mac and linux. If you are using windows reconsider your life choices and consider dual booting Ubuntu.
+}
+\details{
+Generate a phylogenetic tree and optional plot.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/Fraction.Filter.R
 \name{Fraction.Filter}
 \alias{Fraction.Filter}
-\title{\code{Filter.OTUs.Fraction} Remove Features/OTUs/SVs representing less than a certain specified fraction of the total dataset. Similar to filter_otus_from_otutable.py in QIIME.}
+\title{Filter.OTUs.Fraction}
 \usage{
 Fraction.Filter(FEATURES, MINFRACTION, VERBOSE)
 }
@@ -17,5 +17,5 @@ Fraction.Filter(FEATURES, MINFRACTION, VERBOSE)
 Filtered Table
 }
 \description{
-\code{Filter.OTUs.Fraction} Remove Features/OTUs/SVs representing less than a certain specified fraction of the total dataset. Similar to filter_otus_from_otutable.py in QIIME.
+Remove Features/OTUs/SVs representing less than a certain specified fraction of the total dataset. Similar to filter_otus_from_otutable.py in QIIME.
 }
