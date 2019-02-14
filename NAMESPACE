@@ -37,7 +37,7 @@ importFrom(phangorn, dist.ml)
 importFrom(phangorn, NJ)
 importFrom(phangorn, pml)
 importFrom(phangorn, optim.pml)
-
+importFrom(phangorn, midpoint)
 
 importFrom(vegan, vegdist)
 importFrom(vegan, adonis)
@@ -94,7 +94,7 @@ export(Fraction.Filter)
 export(Make.CLR)
 export(Make.Percent)
 export(Make.Proportion)
-export(Make.Tree.QIIME)
+export(Make.Tree.Fast)
 export(Make.Tree.R)
 
 
