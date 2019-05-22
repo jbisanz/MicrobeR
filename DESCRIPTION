@@ -1,7 +1,7 @@
 Package: MicrobeR
 Type: Package
 Title: Handy functions for microbiome analysis in R
-Version: 0.3.1
+Version: 0.3.2
 Maintainer: Jordan Bisanz <jordan.bisanz@gmail.com>
 Description: Helpful tools for visualizing and processing microbiome related data.
 License: None
@@ -28,7 +28,7 @@ Imports:
     tidyr (>= 0.6.1),
     magrittr (>= 1.5),
     data.table (>= 1.9.6),
-    rtk (>=0.2.5.7)
+    rtk (>= 0.2.5.7)
     
     
 

@@ -18,7 +18,7 @@ importFrom(dplyr, filter)
 importFrom(dplyr, mutate)
 importFrom(dplyr, rename)
 
-importFrom(magrittr,"%>%")
+importFrom(magrittr,`%>%`)
 importFrom(zCompositions, cmultRepl)
 
 importFrom(ape,read.tree)
